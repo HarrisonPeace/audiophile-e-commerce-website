@@ -1,0 +1,14 @@
+.mcn-content {
+  @apply text-mcn-black [&>*:last-child]:mb-0;
+
+  ul {
+    @apply ml-4 list-square;
+    p {
+      @apply inline;
+    }
+  }
+
+  ol {
+    @apply ml-4 list-decimal;
+  }
+}

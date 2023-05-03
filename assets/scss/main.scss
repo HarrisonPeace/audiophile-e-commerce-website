@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @import './base/global.scss';
+}
+
+@layer components {
+  @import './components/content.scss';
+  @import './components/select.scss';
+}
+
+@layer utilities {
+  @import './utilities/index.scss';
+}
