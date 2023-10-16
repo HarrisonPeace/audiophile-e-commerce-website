@@ -1,18 +1,104 @@
-body,
-p {
-  @apply font-base text-base font-normal text-black-theme;
+@function convert-px-to-rem($px) {
+  @return calc($px / 16 * 1rem);
 }
+
+@mixin text-styles($font-size, $line-height, $letter-spacing: initial, $font-weight: 600, $text-transform: uppercase) {
+  font-weight: $font-weight;
+  font-size: convert-px-to-rem($font-size);
+  line-height: convert-px-to-rem($line-height);
+  letter-spacing: $letter-spacing;
+  text-transform: $text-transform;
+}
+
+@mixin text-heading-4xl {
+  @apply text-dark;
+  @include text-styles(56, 58, 2px);
+}
+
+@mixin text-heading-3xl {
+  @apply text-dark;
+  @include text-styles(40, 44, 1.5px);
+}
+
+@mixin text-heading-2xl {
+  @apply text-dark;
+  @include text-styles(32, 36, 1.15px);
+}
+
+@mixin text-heading-xl {
+  @apply text-dark;
+  @include text-styles(28, 38, 2px);
+}
+
+@mixin text-heading-lg {
+  @apply text-dark;
+  @include text-styles(24, 33, 1.7px);
+}
+
+@mixin text-heading-base {
+  @apply text-dark;
+  @include text-styles(18, 24, 1.3px);
+}
+
+@mixin text-overline {
+  @apply text-primary;
+  @include text-styles(14, 19, 10px, 400);
+}
+
+@mixin text-sub-title {
+  @apply text-primary;
+  @include text-styles(13, 25, 1px);
+}
+
+@mixin text-body {
+  @apply text-dark;
+  @include text-styles(15, 25, $font-weight: 500, $text-transform: "none");
+}
+
+/*** Body Text Styles ***/
+
+body,
+p,
+.text-body {
+  @include text-body();
+}
+
+.text-overline {
+  @include text-overline();
+}
+
+.text-sub-title {
+  @include text-sub-title();
+}
+
+/*** Heading Text Styles ***/
 
 h1,
+.text-heading-4xl {
+  @include text-heading-4xl;
+}
 h2,
+.text-heading-3xl {
+  @include text-heading-3xl;
+}
 h3,
+.text-heading-2xl {
+  @include text-heading-2xl;
+}
 h4,
+.text-heading-xl {
+  @include text-heading-xl;
+}
 h5,
-h6 {
-  @apply break-words font-usual sm:break-normal;
+.text-heading-lg {
+  @include text-heading-lg;
+}
+h6,
+.text-heading-base {
+  @include text-heading-base;
 }
 
-// Text margins
+/*** Text margins ***/
 
 h1,
 h2 {
@@ -30,22 +116,7 @@ p {
   @apply mb-4;
 }
 
-// Heading text sizes
-h1 {
-  @apply text-heading-3xl;
-}
-h2 {
-  @apply text-heading-2xl;
-}
-h3 {
-  @apply text-heading-xl;
-}
-h4 {
-  @apply text-heading-lg;
-}
-h5 {
-  @apply text-heading-base;
-}
-h6 {
-  @apply text-base font-medium;
+/*** Font Styles ***/
+body {
+  @apply font-manrope;
 }
