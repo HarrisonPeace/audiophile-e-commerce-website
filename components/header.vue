@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/core";
 
 const { products } = storeToRefs(useProductStore());
 const showMobileMenu = ref(false);
@@ -21,36 +21,31 @@ const navRefs = ref<HTMLElement[]>([]);
 const headerRef = ref<HTMLElement | null>(null);
 const reduceHeaderPaddingTimeout = ref(false);
 
-const onScroll = () => {
-  if (!headerRef.value || !navRefs.value || showMobileMenu.value) return;
+const { y } = useWindowScroll();
+watch(
+  () => y.value,
+  () => {
+    if (!headerRef.value || !navRefs.value || showMobileMenu.value) return;
 
-  const updateReduceHeaderPadding = (bool: boolean) => {
-    if (reduceHeaderPadding.value !== bool && !reduceHeaderPaddingTimeout.value) {
-      reduceHeaderPadding.value = bool;
-      reduceHeaderPaddingTimeout.value = true;
-      setTimeout(() => {
-        reduceHeaderPaddingTimeout.value = false;
-      }, 150);
+    const updateReduceHeaderPadding = (bool: boolean) => {
+      if (reduceHeaderPadding.value !== bool && !reduceHeaderPaddingTimeout.value) {
+        reduceHeaderPadding.value = bool;
+        reduceHeaderPaddingTimeout.value = true;
+        setTimeout(() => {
+          reduceHeaderPaddingTimeout.value = false;
+        }, 150);
+      }
+    };
+
+    if (y.value < lastScrollTop.value || y.value <= headerRef.value.offsetHeight) {
+      updateReduceHeaderPadding(false);
+    } else if (!reduceHeaderPadding.value && !reduceHeaderPaddingTimeout.value) {
+      updateReduceHeaderPadding(true);
     }
-  };
 
-  const posY = window.scrollY;
-  if (posY < lastScrollTop.value || posY <= headerRef.value.offsetHeight) {
-    updateReduceHeaderPadding(false);
-  } else if (!reduceHeaderPadding.value && !reduceHeaderPaddingTimeout.value) {
-    updateReduceHeaderPadding(true);
+    lastScrollTop.value = y.value <= 0 ? 0 : y.value;
   }
-
-  lastScrollTop.value = posY <= 0 ? 0 : posY;
-};
-
-onMounted(() => {
-  window.addEventListener("scroll", onScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", onScroll);
-});
+);
 </script>
 
 <template>
