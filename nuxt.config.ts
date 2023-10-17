@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/tailwindcss", "@nuxt/image"],
   app: {
     head: {
       link: [
@@ -14,5 +14,4 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/scss/main.scss"],
-  modules: ["@vueuse/nuxt", "@nuxtjs/tailwindcss", "@nuxt/image"],
 });

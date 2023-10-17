@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>Working</h1>
+  <footer>
+    <NuxtImg src="/logo.svg" />
+  </footer>
 </template>
