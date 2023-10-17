@@ -11,12 +11,12 @@ module.exports = {
         "primary-light": "#FBAF85",
         dark: "#000000",
         light: "#FFFFFF",
-        "gray-light": "#333136",
-        "gray-medium": "#333136",
-        "gray-dark": "#F1F3F5",
+        "gray-light": "#FAFAFA",
+        "gray-medium": "#F1F1F1",
+        "gray-dark": "#101010",
       },
-      screens: {
-        "3xl": "2000px",
+      boxShadow: {
+        product: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
       },
     },
     fontFamily: {

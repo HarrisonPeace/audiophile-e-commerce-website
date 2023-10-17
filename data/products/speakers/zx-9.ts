@@ -1,4 +1,6 @@
-export default {
+import { Product } from "@interfaces";
+
+const ZX9: Product = {
   name: "ZX9",
   description:
     "Upgrade your sound system with the all new ZX9 active speaker. It’s a bookshelf speaker system that offers truly wireless connectivity -- creating new possibilities for more pleasing and practical audio setups.",
@@ -16,3 +18,5 @@ export default {
     { qnt: 1, item: "10m Optical Cable" },
   ],
 };
+
+export default ZX9;

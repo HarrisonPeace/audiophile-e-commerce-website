@@ -1,10 +1,13 @@
+import path from "path";
+
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/tailwindcss", "@nuxt/image"],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/tailwindcss", "@nuxt/image", "@pinia/nuxt"],
   app: {
+    pageTransition: { name: "page", mode: "out-in" },
     head: {
       link: [
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
-        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: true },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" },
         {
           href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap",
           rel: "stylesheet",
@@ -14,4 +17,12 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/scss/main.scss"],
+  alias: {
+    "@interfaces": path.resolve(__dirname, "interfaces"),
+    "@data": path.resolve(__dirname, "data"),
+  },
+  typescript: {
+    strict: true,
+    typeCheck: true,
+  },
 });

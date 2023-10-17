@@ -1,4 +1,6 @@
-export default {
+import { Product } from "@interfaces";
+
+const yx1Wireless: Product = {
   name: "YX1 WIRELESS",
   description:
     "Tailor your listening experience with bespoke dynamic drivers from the new YX1 Wireless Earphones. Enjoy incredible high-fidelity sound even in noisy environments with its active noise cancellation feature.",
@@ -16,3 +18,5 @@ export default {
     { qnt: 1, item: "Travel Pouch" },
   ],
 };
+
+export default yx1Wireless;

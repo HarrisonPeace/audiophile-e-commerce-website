@@ -9,7 +9,7 @@ module.exports = {
     parser: "@typescript-eslint/parser",
   },
   extends: ["@nuxtjs/eslint-config-typescript", "plugin:prettier/recommended"],
-  plugins: [],
+  plugins: ["vue"],
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
@@ -19,5 +19,10 @@ module.exports = {
     "vue/component-definition-name-casing": 0,
     "vue/multi-word-component-names": 0,
     "no-undef": 0,
+  },
+  settings: {
+    "import/resolver": {
+      typescript: {},
+    },
   },
 };

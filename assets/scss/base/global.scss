@@ -55,6 +55,10 @@
   @include text-styles(15, 25, $font-weight: 500, $text-transform: "none");
 }
 
+@mixin text-button {
+  @include text-styles(13, 13, 1px, 700);
+}
+
 /*** Body Text Styles ***/
 
 body,
@@ -69,6 +73,10 @@ p,
 
 .text-sub-title {
   @include text-sub-title();
+}
+
+.text-button {
+  @include text-button();
 }
 
 /*** Heading Text Styles ***/

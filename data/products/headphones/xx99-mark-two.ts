@@ -1,4 +1,6 @@
-export default {
+import { Product } from "@interfaces";
+
+const xx99MarkTwo: Product = {
   name: "XX99 Mark II",
   description:
     "The new XX99 Mark II headphones is the pinnacle of pristine audio. It redefines your premium headphone experience by reproducing the balanced depth and precision of studio-quality sound.",
@@ -16,3 +18,5 @@ export default {
     { qnt: 1, item: "Travel Bag" },
   ],
 };
+
+export default xx99MarkTwo;
