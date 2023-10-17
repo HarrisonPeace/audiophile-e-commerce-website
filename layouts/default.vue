@@ -5,7 +5,7 @@
       <NuxtLoadingIndicator color="#00A7F2" />
       <slot />
     </main>
-    <Footer />
+    <Footer class="mt-auto" />
   </div>
 </template>
 

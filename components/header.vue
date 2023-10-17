@@ -56,10 +56,14 @@ watch(
           <NuxtImg src="/logo.svg" width="143" height="25" />
         </NuxtLink>
         <nav class="hidden gap-8 lg:flex">
-          <NuxtLink class="hover-light py-8 uppercase" to="/">Home</NuxtLink>
-          <NuxtLink v-for="(value, key) in products" :key="key" class="hover-light py-8 uppercase" :to="`/${key}`">{{
-            key
-          }}</NuxtLink>
+          <NuxtLink class="hover-light py-8 font-bold uppercase" to="/">Home</NuxtLink>
+          <NuxtLink
+            v-for="(value, key) in products"
+            :key="key"
+            class="hover-light py-8 font-bold uppercase"
+            :to="`/${key}`"
+            >{{ key }}</NuxtLink
+          >
         </nav>
         <button class="hover-light py-8">
           <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
