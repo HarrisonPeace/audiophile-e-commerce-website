@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ProductCategories, Products } from "@enums";
-import { Product } from "@interfaces";
 
 const { products } = storeToRefs(useProductStore());
 
-type cardStyles = "hero" | "default" | "split";
+type cardStyles = "hero" | "default" | "split" | "display";
 
 const props = defineProps<{
   productCategory: ProductCategories;
@@ -13,11 +12,7 @@ const props = defineProps<{
   cardStyle: cardStyles;
 }>();
 
-const selectedProduct = computed(() => {
-  const product = products.value[props.productCategory][props.product];
-  if (typeof product === "string") throw new Error("Product not found");
-  return product as Product;
-});
+const selectedProduct = computed(() => products.value[props.productCategory][props.product]);
 
 const styles: { [key in cardStyles]?: any } = {
   hero: {
@@ -28,7 +23,7 @@ const styles: { [key in cardStyles]?: any } = {
     img: "h-52 lg:h-[490px] relative z-[1]",
     textContainer: "mx-6 mt-8 mb-10 relative flex flex-col justify-center align-center",
     heading: "max-xl:text-center text-heading-4xl text-light flex flex-col justify-center align-center",
-    description: "max-xl:text-center max-xl:mx-auto text-light",
+    description: "max-xl:text-center max-xl:mx-auto text-light max-w-sm",
     button: "max-xl:mx-auto",
   },
   default: {
@@ -37,7 +32,7 @@ const styles: { [key in cardStyles]?: any } = {
     img: "h-full w-full object-cover rounded-lg",
     textContainer: "relative mx-6 my-28 flex flex-col justify-center align-left lg:mx-16",
     heading: "",
-    description: "",
+    description: "max-w-sm",
     button: "",
   },
   split: {
@@ -46,8 +41,17 @@ const styles: { [key in cardStyles]?: any } = {
     img: "h-full w-full object-cover rounded-lg",
     textContainer: "bg-gray-medium px-6 py-28 flex flex-col justify-center align-left lg:px-16",
     heading: "",
-    description: "",
+    description: "max-w-sm",
     button: "",
+  },
+  display: {
+    container: "grid grid-cols-1 lg:grid-cols-2 relative gap-y-8 md:gap-y-12 gap-x-28",
+    imgContainer: "w-full h-full bg-gray-medium flex justify-center items-center p-12 lg:p-20",
+    img: "h-60 lg:h-96 w-auto object-contain",
+    textContainer: "flex flex-col justify-center items-center lg:align-left",
+    heading: "max-lg:text-center",
+    description: "max-lg:text-center max-w-2xl opacity-60",
+    button: "max-lg:text-center",
   },
 };
 
@@ -63,8 +67,24 @@ const imgUrl = computed(() => {
     case "split":
       img = "product-2";
       break;
+
+    default:
+      img = "display";
+      break;
   }
+
   return `/images/products/${props.productCategory}/${props.product}/${img}.png`;
+});
+
+const btnStyle = computed(() => {
+  switch (props.cardStyle) {
+    case "hero":
+      return "secondaryInverted";
+    case "display":
+      return "primary";
+    default:
+      return "secondary";
+  }
 });
 </script>
 
@@ -94,10 +114,12 @@ const imgUrl = computed(() => {
           {{ productCategory !== "speakers" ? " " : "" }}
           <span>{{ productCategory !== "speakers" ? productCategory : productCategory.slice(0, -1) }}</span>
         </h3>
-        <p v-if="description" class="mb-0 max-w-sm" :class="styles[cardStyle].description">{{ description }}</p>
+        <p v-if="description || cardStyle === 'display'" class="mb-0" :class="styles[cardStyle].description">
+          {{ description ?? selectedProduct.description }}
+        </p>
         <Button
-          :btn-style="cardStyle === 'hero' ? 'secondaryInverted' : 'secondary'"
-          :to="`/product/${productCategory}/${product}`"
+          :btn-style="btnStyle"
+          :to="`/products/${productCategory}/${product}`"
           class="w-fit"
           :class="styles[cardStyle].button"
         >

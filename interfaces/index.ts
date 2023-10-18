@@ -8,7 +8,7 @@ export interface Product {
 }
 
 export interface Category {
-  [key: string]: Product | string;
+  [key: string]: Product;
 }
 
 export interface Products {

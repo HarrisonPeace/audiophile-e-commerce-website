@@ -3,6 +3,12 @@ const { products } = storeToRefs(useProductStore());
 defineProps<{
   disableCategories?: string[];
 }>();
+
+const heroProducts = ref({
+  earphones: "yx1Wireless",
+  headphones: "xx99MarkOne",
+  speakers: "zx9",
+});
 </script>
 
 <template>
@@ -12,10 +18,10 @@ defineProps<{
       :key="key"
       :class="[disableCategories?.includes?.(key) && 'pointer-events-none']"
       class="group/nav-item categoryCard relative w-full"
-      :to="`/${key}`"
+      :to="`/products/${key}`"
     >
       <NuxtImg
-        :src="`/images/products/${key}/${value.heroProduct}/display.png`"
+        :src="`/images/products/${key}/${heroProducts[key]}/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
         height="104"
       />

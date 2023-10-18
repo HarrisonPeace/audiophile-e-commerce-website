@@ -21,7 +21,7 @@ const currentYear = new Date().getFullYear();
               v-for="(value, key) in products"
               :key="key"
               class="hover-light font-bold uppercase"
-              :to="`/${key}`"
+              :to="`/product/${key}`"
               >{{ key }}</NuxtLink
             >
           </div>

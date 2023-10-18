@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ProductCategories, Products } from "@enums";
-import { Product } from "@interfaces";
-
 const { productIsNew } = useHelpers();
 
 const { products } = storeToRefs(useProductStore());
@@ -12,11 +10,7 @@ const props = defineProps<{
   description: string;
 }>();
 
-const selectedProduct = computed(() => {
-  const product = products.value[props.productCategory][props.product];
-  if (typeof product === "string") throw new Error("Product not found");
-  return product as Product;
-});
+const selectedProduct = computed(() => products.value[props.productCategory][props.product]);
 
 const headerRef = ref<HTMLElement | null>(null);
 const maxWidth = computed(() => {
@@ -52,7 +46,7 @@ const maxWidth = computed(() => {
               ><span>{{ productCategory }}</span>
             </h1>
             <p class="mb-10 text-light opacity-50 max-lg:text-center">{{ description }}</p>
-            <Button btn-style="primary" :to="`/product/${productCategory}/${product}`">See Product</Button>
+            <Button btn-style="primary" :to="`/products/${productCategory}/${product}`">See Product</Button>
           </div>
         </div>
       </div>

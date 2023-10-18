@@ -120,7 +120,7 @@ console.log(route.path);
                 reduceHeaderPadding ? 'py-3' : 'py-7',
                 route.path.includes(key) && 'pointer-events-none  border-b-4 border-b-primary',
               ]"
-              :to="`/${key}`"
+              :to="`/products/${key}`"
               >{{ key }}</NuxtLink
             >
           </nav>
