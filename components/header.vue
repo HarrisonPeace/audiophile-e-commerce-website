@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/core";
 
+const route = useRoute();
 const { products } = storeToRefs(useProductStore());
 const showMobileMenu = ref(false);
 
@@ -95,21 +96,19 @@ watch(
             to="/"
             class="transition-all ease-in-out"
             :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
+            title="Home"
           >
             <NuxtImg src="/logo.svg" width="143" height="25" />
           </NuxtLink>
           <nav ref="navRefs" class="hidden gap-8 lg:flex">
             <NuxtLink
-              class="hover-light font-bold uppercase transition-all ease-in-out"
-              :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
-              to="/"
-              >Home</NuxtLink
-            >
-            <NuxtLink
               v-for="(value, key) in products"
               :key="key"
-              class="hover-light font-bold uppercase transition-all ease-in-out"
-              :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
+              class="hover-light border-b-4 border-t-4 border-solid border-gray-dark font-bold uppercase transition-all ease-in-out"
+              :class="[
+                reduceHeaderPadding ? 'py-3' : 'py-7',
+                route.path.includes(key) && 'pointer-events-none  border-b-4 border-b-primary',
+              ]"
               :to="`/${key}`"
               >{{ key }}</NuxtLink
             >
@@ -133,7 +132,7 @@ watch(
       <Transition name="mobile-menu">
         <div v-if="showMobileMenu" class="absolute left-0 top-full w-full rounded-b-md bg-light pb-16 pt-14">
           <nav>
-            <CategoryLinks />
+            <Categories />
           </nav>
         </div>
       </Transition>
