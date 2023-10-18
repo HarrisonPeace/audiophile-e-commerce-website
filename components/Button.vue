@@ -1,0 +1,28 @@
+<script setup lang="ts">
+defineEmits(["click"]);
+const props = defineProps<{
+  to?: string;
+  target?: string;
+  btnStyle: "primary" | "secondary";
+}>();
+
+const componentType = computed(() => {
+  if (props.to) return resolveComponent("NuxtLink");
+  return "button";
+});
+
+const styles = {
+  primary: "border-primary bg-primary text-light hover:bg-primary-light",
+  secondary: "border-dark bg-transparent text-dark hover:bg-dark hover:text-light",
+};
+
+const componentProps = computed(() => ({
+  ...(props.to && { to: props.to }),
+  ...(props.target && { target: props.target }),
+  class: `text-button border border-solid px-8 py-4 transition-colors ease-in-out ${styles[props.btnStyle]}`,
+}));
+</script>
+
+<template>
+  <component :is="componentType" v-bind="componentProps" @click="$emit('click')"><slot /></component>
+</template>

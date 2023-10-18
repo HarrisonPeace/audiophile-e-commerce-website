@@ -1,6 +1,6 @@
-import yx1Wireless from "./yx1-wireless";
+import yx1Wireless from "./yx1Wireless";
 
 export default {
-  heroProduct: "yx1-wireless",
+  heroProduct: "yx1Wireless",
   yx1Wireless,
 };

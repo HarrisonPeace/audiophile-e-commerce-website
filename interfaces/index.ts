@@ -6,3 +6,13 @@ export interface Product {
   features: string[];
   inTheBox: { qnt: number; item: string }[];
 }
+
+export interface Category {
+  [key: string]: Product | string;
+}
+
+export interface Products {
+  earphones: Category;
+  headphones: Category;
+  speakers: Category;
+}

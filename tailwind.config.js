@@ -13,10 +13,10 @@ module.exports = {
         light: "#FFFFFF",
         "gray-light": "#FAFAFA",
         "gray-medium": "#F1F1F1",
-        "gray-dark": "#101010",
+        "gray-dark": "#121212",
       },
-      boxShadow: {
-        product: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+      dropShadow: {
+        product: "0px 18px 10px 0px rgba(0, 0, 0, 0.3)",
       },
     },
     fontFamily: {

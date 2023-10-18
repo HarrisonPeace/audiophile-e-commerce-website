@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   alias: {
     "@interfaces": path.resolve(__dirname, "interfaces"),
     "@data": path.resolve(__dirname, "data"),
+    "@enums": path.resolve(__dirname, "enums"),
   },
   typescript: {
     strict: true,

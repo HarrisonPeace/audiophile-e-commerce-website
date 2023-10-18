@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { products } = storeToRefs(useProductStore());
+const currentYear = new Date().getFullYear();
 </script>
 
 <template>
@@ -34,7 +35,7 @@ const { products } = storeToRefs(useProductStore());
           <p
             class="order-5 col-span-2 mb-0 text-center font-bold text-light opacity-50 md:col-span-1 md:text-left lg:order-6 lg:col-span-2"
           >
-            Copyright 2021. All Rights Reserved
+            Copyright {{ currentYear }}. All Rights Reserved
           </p>
 
           <div

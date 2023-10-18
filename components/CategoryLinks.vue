@@ -7,7 +7,7 @@ const { products } = storeToRefs(useProductStore());
     <NuxtLink v-for="(value, key) in products" :key="key" class="group/nav-item categoryCard w-full" :to="`/${key}`">
       <NuxtImg
         :src="`/images/products/${key}/${value.heroProduct}/display.png`"
-        class="drop relative mx-auto -mb-14 drop-shadow-xl transition-transform group-hover/nav-item:translate-y-1"
+        class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform group-hover/nav-item:-translate-y-1"
         height="104"
       />
       <div class="flex flex-col items-center justify-center rounded-lg bg-gray-medium pb-6 pt-20">
@@ -16,7 +16,7 @@ const { products } = storeToRefs(useProductStore());
           <span
             class="text-button text-dark opacity-60 transition-all group-hover/nav-item:text-primary group-hover/nav-item:opacity-100"
           >
-            SHOP
+            Shop
           </span>
           <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.32227 1L6.32227 6L1.32227 11" stroke="#D87D4A" stroke-width="2" />
@@ -26,4 +26,3 @@ const { products } = storeToRefs(useProductStore());
     </NuxtLink>
   </div>
 </template>
-~/data/products
