@@ -3,16 +3,17 @@ import { ProductCategories, Products } from "@enums";
 </script>
 
 <template>
-  <div class="mb-24 flex flex-col gap-24">
+  <div>
     <Banner
       :product-category="ProductCategories.headphones"
       :product="Products.xx99MarkTwo"
       description="Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast."
+      class="mb-10 md:mb-24 lg:mb-48"
     />
 
-    <Categories />
+    <Categories class="mb-32 md:mb-24 lg:mb-40" />
 
-    <div class="flex flex-col gap-12">
+    <div class="mb-24 flex flex-col gap-12 md:mb-48">
       <ProductCard
         :product-category="ProductCategories.speakers"
         :product="Products.zx9"

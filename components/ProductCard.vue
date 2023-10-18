@@ -41,7 +41,7 @@ const styles: { [key in cardStyles]?: any } = {
     button: "",
   },
   split: {
-    container: "grid grid-cols-1 md:grid-cols-2 relative gap-x-3 gap-y-12",
+    container: "grid grid-cols-1 md:grid-cols-2 relative gap-x-3 lg:gap-x-8 gap-y-12",
     imgContainer: "w-full h-full ",
     img: "h-full w-full object-cover rounded-lg",
     textContainer: "bg-gray-medium px-6 py-28 flex flex-col justify-center align-left lg:px-16",
