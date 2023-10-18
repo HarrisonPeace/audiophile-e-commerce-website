@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ProductCategories, Products } from "@enums";
+import { CategoriesEnum, ProductsEnum } from "@enums";
 
 const { products } = storeToRefs(useProductStore());
 const route = useRoute();
-const category = route.params.category as ProductCategories;
-const categoryProducts = computed(() => Object.keys(products.value[category])) as unknown as (keyof typeof Products)[];
+const category = route.params.category as CategoriesEnum;
 
-if (ProductCategories[category] === undefined) {
+if (CategoriesEnum[category] === undefined) {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
+
+const categoryProducts = computed(() => Object.keys(products.value[category]) as (keyof typeof ProductsEnum)[]);
 </script>
 
 <template>
@@ -17,11 +18,12 @@ if (ProductCategories[category] === undefined) {
 
     <div class="mb-28 flex flex-col gap-28 lg:mb-40 lg:gap-40">
       <ProductCard
-        v-for="productKey in categoryProducts"
+        v-for="(productKey, idx) in categoryProducts"
         :key="productKey"
         :product-category="category"
-        :product="Products[productKey]"
+        :product="ProductsEnum[productKey]"
         card-style="display"
+        :img-right="idx % 2 !== 0"
       />
     </div>
     <Categories class="mb-28" />

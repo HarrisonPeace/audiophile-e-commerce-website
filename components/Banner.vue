@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ProductCategories, Products } from "@enums";
+import { CategoriesEnum, ProductsEnum } from "@enums";
 const { productIsNew } = useHelpers();
 
 const { products } = storeToRefs(useProductStore());
 
 const props = defineProps<{
-  productCategory: ProductCategories;
-  product: Products;
+  productCategory: CategoriesEnum;
+  product: ProductsEnum;
   description: string;
 }>();
 

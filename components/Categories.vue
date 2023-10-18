@@ -12,7 +12,7 @@ const heroProducts = ref({
 </script>
 
 <template>
-  <div class="content-container grid w-full grid-cols-1 gap-8 gap-x-3 sm:grid-cols-3">
+  <div class="content-container grid w-full grid-cols-1 gap-x-3 gap-y-8 sm:grid-cols-3 lg:gap-x-8">
     <NuxtLink
       v-for="(value, key) in products"
       :key="key"

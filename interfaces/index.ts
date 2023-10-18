@@ -11,7 +11,7 @@ export interface Category {
   [key: string]: Product;
 }
 
-export interface Products {
+export interface Categories {
   earphones: Category;
   headphones: Category;
   speakers: Category;

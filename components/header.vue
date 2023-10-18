@@ -56,8 +56,6 @@ const headerHeight = computed(() => {
   if (!headerRef.value) return 0;
   return headerRef.value.offsetHeight;
 });
-
-console.log(route.path);
 </script>
 
 <template>

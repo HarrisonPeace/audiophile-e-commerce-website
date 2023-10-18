@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ProductCategories, Products } from "@enums";
+import { CategoriesEnum, ProductsEnum } from "@enums";
 </script>
 
 <template>
   <div>
     <Banner
-      :product-category="ProductCategories.headphones"
-      :product="Products.xx99MarkTwo"
+      :product-category="CategoriesEnum.headphones"
+      :product="ProductsEnum.xx99MarkTwo"
       description="Experience natural, lifelike audio and exceptional build quality made for the passionate music enthusiast."
       class="mb-10 md:mb-24 lg:mb-48"
     />
@@ -15,13 +15,17 @@ import { ProductCategories, Products } from "@enums";
 
     <div class="mb-24 flex flex-col gap-12 md:mb-48">
       <ProductCard
-        :product-category="ProductCategories.speakers"
-        :product="Products.zx9"
+        :product-category="CategoriesEnum.speakers"
+        :product="ProductsEnum.zx9"
         description="Upgrade to premium speakers that are phenomenally built to deliver truly remarkable sound."
         card-style="hero"
       />
-      <ProductCard :product-category="ProductCategories.speakers" :product="Products.zx7" card-style="default" />
-      <ProductCard :product-category="ProductCategories.earphones" :product="Products.yx1Wireless" card-style="split" />
+      <ProductCard :product-category="CategoriesEnum.speakers" :product="ProductsEnum.zx7" card-style="default" />
+      <ProductCard
+        :product-category="CategoriesEnum.earphones"
+        :product="ProductsEnum.yx1Wireless"
+        card-style="split"
+      />
     </div>
   </div>
 </template>

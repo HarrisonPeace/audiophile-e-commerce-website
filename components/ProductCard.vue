@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ProductCategories, Products } from "@enums";
+import { CategoriesEnum, ProductsEnum } from "@enums";
 
 const { products } = storeToRefs(useProductStore());
 
-type cardStyles = "hero" | "default" | "split" | "display";
+type cardStyles = "hero" | "default" | "split" | "display" | "displayGrid";
 
 const props = defineProps<{
-  productCategory: ProductCategories;
-  product: Products;
+  productCategory: CategoriesEnum;
+  product: ProductsEnum;
   description?: string;
   cardStyle: cardStyles;
+  imgRight?: boolean;
 }>();
 
 const selectedProduct = computed(() => products.value[props.productCategory][props.product]);
@@ -46,28 +47,35 @@ const styles: { [key in cardStyles]?: any } = {
   },
   display: {
     container: "grid grid-cols-1 lg:grid-cols-2 relative gap-y-8 md:gap-y-12 gap-x-28",
-    imgContainer: "w-full h-full bg-gray-medium flex justify-center items-center p-12 lg:p-20",
+    imgContainer: `w-full h-full bg-gray-medium flex justify-center items-center p-12 lg:p-20 ${
+      props.imgRight ? "lg:order-2" : ""
+    }`,
     img: "h-60 lg:h-96 w-auto object-contain",
-    textContainer: "flex flex-col justify-center items-center lg:align-left",
+    textContainer: `flex flex-col justify-center items-center lg:align-left ${props.imgRight ? "lg:order-1" : ""}`,
     heading: "max-lg:text-center",
     description: "max-lg:text-center max-w-2xl opacity-60",
     button: "max-lg:text-center",
+  },
+  displayGrid: {
+    container: "flex flex-col relative gap-y-8 md:gap-y-12",
+    imgContainer: "w-full  bg-gray-medium flex justify-center items-center p-3 md:p-14",
+    img: "h-24 md:h-48 w-auto object-contain",
+    textContainer: "flex flex-col justify-between items-center grow",
+    heading: "text-center text-heading-base",
+    description: "text-center max-w-2xl opacity-60",
+    button: "text-center",
   },
 };
 
 const imgUrl = computed(() => {
   let img = "";
   switch (props.cardStyle) {
-    case "hero":
-      img = "display";
-      break;
     case "default":
       img = "banner";
       break;
     case "split":
       img = "product-2";
       break;
-
     default:
       img = "display";
       break;
@@ -82,6 +90,8 @@ const btnStyle = computed(() => {
       return "secondaryInverted";
     case "display":
       return "primary";
+    case "displayGrid":
+      return "primary";
     default:
       return "secondary";
   }
@@ -89,8 +99,11 @@ const btnStyle = computed(() => {
 </script>
 
 <template>
-  <div class="content-container group/card-product w-full overflow-hidden">
-    <div class="rounded-lg" :class="styles[cardStyle].container">
+  <div
+    :class="cardStyle !== 'displayGrid' ? 'content-container' : ''"
+    class="group/card-product flex w-full overflow-hidden"
+  >
+    <div class="grow rounded-lg" :class="styles[cardStyle].container">
       <div class="rounded-lg" :class="styles[cardStyle].imgContainer">
         <NuxtImg :src="imgUrl" height="500" :class="styles[cardStyle].img" />
         <div v-if="cardStyle === 'hero'" class="h overflow-hidden">

@@ -1,7 +1,7 @@
 <template>
   <div class="flex min-h-screen flex-col bg-white">
     <Header />
-    <main class="bg-light">
+    <main class="grow bg-light">
       <NuxtLoadingIndicator color="#D87D4A" />
       <slot />
 
