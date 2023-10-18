@@ -10,15 +10,15 @@ const toggleMobileMenu = () => {
   showMobileMenu.value = !showMobileMenu.value;
 };
 
+const closeMobileMenu = () => {
+  console.log("running");
+  document.body.classList.remove("overflow-y-hidden");
+  showMobileMenu.value = false;
+};
+
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const isLargeScreenOrSmaller = breakpoints.smallerOrEqual("lg");
-watch(
-  () => isLargeScreenOrSmaller.value,
-  () => {
-    showMobileMenu.value = false;
-    document.body.classList.remove("overflow-y-hidden");
-  }
-);
+watch([() => isLargeScreenOrSmaller.value, () => route.path], closeMobileMenu);
 
 const reduceHeaderPadding = ref(false);
 const lastScrollTop = ref(0);
@@ -56,6 +56,8 @@ const headerHeight = computed(() => {
   if (!headerRef.value) return 0;
   return headerRef.value.offsetHeight;
 });
+
+console.log(route.path);
 </script>
 
 <template>
@@ -143,11 +145,11 @@ const headerHeight = computed(() => {
           v-if="showMobileMenu"
           class="absolute left-0 top-full w-full overflow-y-auto rounded-b-md bg-light pb-16 pt-14"
           :style="{
-            maxHeight: headerHeight ? `calc(100vh - ${headerHeight + reduceHeaderPadding ? 16 : 0}px)` : '100vh',
+            maxHeight: headerHeight ? `calc(100vh - ${headerHeight + (reduceHeaderPadding ? 16 : 0)}px)` : '100vh',
           }"
         >
           <nav>
-            <Categories />
+            <Categories :disable-categories="[route.path.replace('/', '')]" />
           </nav>
         </div>
       </Transition>

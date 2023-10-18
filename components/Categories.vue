@@ -1,10 +1,19 @@
 <script setup lang="ts">
 const { products } = storeToRefs(useProductStore());
+defineProps<{
+  disableCategories?: string[];
+}>();
 </script>
 
 <template>
   <div class="content-container grid w-full grid-cols-1 gap-8 gap-x-3 sm:grid-cols-3">
-    <NuxtLink v-for="(value, key) in products" :key="key" class="group/nav-item categoryCard w-full" :to="`/${key}`">
+    <NuxtLink
+      v-for="(value, key) in products"
+      :key="key"
+      :class="[disableCategories?.includes?.(key) && 'pointer-events-none']"
+      class="group/nav-item categoryCard relative w-full"
+      :to="`/${key}`"
+    >
       <NuxtImg
         :src="`/images/products/${key}/${value.heroProduct}/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
@@ -23,6 +32,10 @@ const { products } = storeToRefs(useProductStore());
           </svg>
         </div>
       </div>
+      <div
+        v-if="disableCategories?.includes?.(key)"
+        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary md:left-0 md:translate-x-0"
+      ></div>
     </NuxtLink>
   </div>
 </template>
