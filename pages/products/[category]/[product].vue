@@ -2,20 +2,23 @@
 import { Product } from "@interfaces";
 import { CategoriesEnum, ProductsEnum } from "@enums";
 
+const cartStore = useCartStore();
+
 const { productIsNew, convertPrice } = useHelpers();
 const { products } = storeToRefs(useProductStore());
 const route = useRoute();
 
-const category = route.params.category as CategoriesEnum;
-const product = route.params.product as ProductsEnum;
+const categoryKey = route.params.category as CategoriesEnum;
+const productKey = route.params.product as ProductsEnum;
 
-if (CategoriesEnum[category] === undefined || ProductsEnum[product] === undefined) {
+if (CategoriesEnum[categoryKey] === undefined || ProductsEnum[productKey] === undefined) {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
 
-const selectedProduct = computed<Product>(() => products.value[category][product]);
+const selectedProduct = computed<Product>(() => products.value[categoryKey][productKey]);
 const suggestedProducts = computed(() => {
-  const suggestedProductKeys: { category: keyof typeof CategoriesEnum; product: keyof typeof ProductsEnum }[] = [];
+  const suggestedProductKeys: { categoryKey: keyof typeof CategoriesEnum; productKey: keyof typeof ProductsEnum }[] =
+    [];
 
   const returnRandomKey = (o: any): any => {
     const keys = Object.keys(o);
@@ -25,12 +28,16 @@ const suggestedProducts = computed(() => {
   while (suggestedProductKeys.length < 3) {
     const randomCategoryKey = returnRandomKey(products.value) as keyof typeof CategoriesEnum;
     const randomProductKey = returnRandomKey(products.value[randomCategoryKey]) as keyof typeof ProductsEnum;
-    if (!suggestedProductKeys.some(keys => keys.product === randomProductKey) && product !== randomProductKey)
-      suggestedProductKeys.push({ category: randomCategoryKey, product: randomProductKey });
+    if (!suggestedProductKeys.some(keys => keys.productKey === randomProductKey) && productKey !== randomProductKey)
+      suggestedProductKeys.push({ categoryKey: randomCategoryKey, productKey: randomProductKey });
   }
 
   return suggestedProductKeys;
 });
+
+const onSubmit = ({ productQnt }: { productQnt: number }) => {
+  cartStore.addToCart(productKey, productQnt);
+};
 </script>
 
 <template>
@@ -52,7 +59,7 @@ const suggestedProducts = computed(() => {
       class="content-container mb-20 grid grid-cols-1 gap-x-16 gap-y-10 md:mb-28 md:grid-cols-2 lg:mb-40 lg:gap-x-32"
     >
       <div class="flex h-full w-full items-center justify-center bg-gray-medium px-4 py-14">
-        <NuxtImg :src="`/images/products/${category}/${product}/display.png`" height="500" class="h-52 lg:h-80" />
+        <NuxtImg :src="`/images/products/${categoryKey}/${productKey}/display.png`" height="500" class="h-52 lg:h-80" />
       </div>
       <div>
         <p v-if="productIsNew(selectedProduct.createdAt)" class="text-overline mb-6">New Product</p>
@@ -69,11 +76,11 @@ const suggestedProducts = computed(() => {
           :value="{
             productQnt: 1,
           }"
-          @submit="submitHandler"
+          @submit="onSubmit"
         >
           <div class="flex gap-4 max-sm:flex-wrap">
             <FormKit type="qntinput" name="productQnt" min="1" max="10" />
-            <Button btn-style="primary" :to="`/products/${category}/${product}`" type="submit"> Add to Cart </Button>
+            <Button btn-style="primary" type="submit"> Add to Cart </Button>
           </div>
         </FormKit>
       </div>
@@ -100,17 +107,17 @@ const suggestedProducts = computed(() => {
       class="content-container mb-20 grid grid-cols-1 gap-5 md:mb-28 md:grid-cols-2 md:grid-rows-2 lg:mb-40 lg:gap-8"
     >
       <NuxtImg
-        :src="`/images/products/${category}/${product}/product-1.png`"
+        :src="`/images/products/${categoryKey}/${productKey}/product-1.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-1 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${category}/${product}/product-2.png`"
+        :src="`/images/products/${categoryKey}/${productKey}/product-2.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-2 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${category}/${product}/product-3.png`"
+        :src="`/images/products/${categoryKey}/${productKey}/product-3.png`"
         height="600"
         class="h-96 w-full rounded-md object-cover object-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       />
@@ -123,9 +130,9 @@ const suggestedProducts = computed(() => {
       <div class="mb-28 grid grid-cols-1 gap-28 gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-3 lg:mb-40 lg:gap-x-8">
         <ProductCard
           v-for="keys in suggestedProducts"
-          :key="keys.product"
-          :product-category="CategoriesEnum[keys.category]"
-          :product="ProductsEnum[keys.product]"
+          :key="keys.productKey"
+          :product-category="CategoriesEnum[keys.categoryKey]"
+          :product="ProductsEnum[keys.productKey]"
           card-style="displayGrid"
         />
       </div>

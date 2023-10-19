@@ -1,6 +1,7 @@
 <template>
   <div class="flex min-h-screen flex-col bg-white">
     <Header />
+    <div id="modals" class="content-container"></div>
     <main class="grow bg-light">
       <NuxtLoadingIndicator color="#D87D4A" />
       <slot />
@@ -23,6 +24,7 @@
       </div>
     </main>
     <Footer class="mt-auto" />
+    <Modal :show-modal="true" position="top-right">ashfjskfhaskfhaskf</Modal>
   </div>
 </template>
 

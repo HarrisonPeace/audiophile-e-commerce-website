@@ -11,7 +11,6 @@ const toggleMobileMenu = () => {
 };
 
 const closeMobileMenu = () => {
-  console.log("running");
   document.body.classList.remove("overflow-y-hidden");
   showMobileMenu.value = false;
 };

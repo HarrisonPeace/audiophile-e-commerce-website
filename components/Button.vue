@@ -12,7 +12,7 @@ const componentType = computed(() => {
 });
 
 const styles = {
-  primary: "border-primary bg-primary text-light hover:bg-primary-light",
+  primary: "border-primary bg-primary text-light hover:bg-primary-light hover:border-primary-light",
   secondary: "border-dark bg-transparent text-dark hover:bg-dark hover:text-light",
   secondaryInverted: "border-dark bg-dark text-light hover:bg-transparent hover:text-dark",
 };
