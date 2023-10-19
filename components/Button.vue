@@ -20,7 +20,9 @@ const styles = {
 const componentProps = computed(() => ({
   ...(props.to && { to: props.to }),
   ...(props.target && { target: props.target }),
-  class: `text-button border border-solid px-8 py-4 transition-colors ease-in-out ${styles[props.btnStyle]}`,
+  class: `h-12 w-fit text-button flex justify-center items-center border border-solid px-8 py-4 transition-colors ease-in-out ${
+    styles[props.btnStyle]
+  }`,
 }));
 </script>
 

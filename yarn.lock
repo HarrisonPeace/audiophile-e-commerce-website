@@ -810,6 +810,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formkit/icons@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@formkit/icons@npm:1.2.2"
+  dependencies:
+    "@formkit/core": 1.2.2
+  checksum: ad3e085612d57a5cf011cc5c7f0b77f0d89621aea8fa8df9d5fcc88e9a8c8ccba9fb996d955e258cb564239eebac80ab70e3784bb43f5471236856d7fc798bec
+  languageName: node
+  linkType: hard
+
 "@formkit/inputs@npm:1.2.2":
   version: 1.2.2
   resolution: "@formkit/inputs@npm:1.2.2"
@@ -857,7 +866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formkit/themes@npm:1.2.2":
+"@formkit/themes@npm:1.2.2, @formkit/themes@npm:^1.2.2":
   version: 1.2.2
   resolution: "@formkit/themes@npm:1.2.2"
   dependencies:
@@ -4070,7 +4079,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "designo-multi-page-website@workspace:."
   dependencies:
+    "@formkit/icons": ^1.2.2
     "@formkit/nuxt": ^1.2.2
+    "@formkit/themes": ^1.2.2
     "@nuxt/image": rc
     "@nuxt/types": ^2.17.1
     "@nuxt/typescript-build": ^3.0.1

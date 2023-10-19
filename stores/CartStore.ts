@@ -1,31 +1,35 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { useStorage } from "@vueuse/core";
-import { ProductsEnum } from "@enums";
+// import { defineStore } from "pinia";
+// import { ref } from "vue";
+// import { useStorage } from "@vueuse/core";
+// import { ProductsEnum } from "@enums";
 
-export const useProductStore = defineStore("ProductStore", () => {
-  const cart = ref(useStorage("APCart", {}));
+// interface Cart {
+//    [product in keyof typeof ProductsEnum]?: number;
+// }
 
-  const addToCart = (product: keyof typeof ProductsEnum, qnt: number) => {
-    if (cart.value[product.name]) {
-      cart.value[product.name].qnt += qnt;
-    } else {
-      cart.value[product.name] = { qnt, item: product };
-    }
-  };
+// export const useCartStore = defineStore("ProductStore", () => {
+//   const cart = ref<Cart>(useStorage("APCart", {}));
 
-  const removeFromCart = (product: keyof typeof ProductsEnum, qnt: number) => {
-    if (cart.value[product.name]) {
-      cart.value[product.name].qnt -= qnt;
-      if (cart.value[product.name].qnt <= 0) {
-        delete cart.value[product.name];
-      }
-    }
-  };
+//   const addToCart = (product: keyof typeof ProductsEnum, qnt: number) => {
+//     if (cart.value[product]) {
+//       cart.value[product] += qnt;
+//     } else {
+//       cart.value[product] = qnt;
+//     }
+//   };
 
-  const clearCart = () => {
-    cart.value = {};
-  };
+//   const removeFromCart = (product: keyof typeof ProductsEnum, qnt: number) => {
+//     if (cart.value[product]) {
+//       cart.value[product] -= qnt;
+//       if (cart.value[product] <= 0) {
+//         delete cart.value[product];
+//       }
+//     }
+//   };
 
-  return { cart, addToCart, removeFromCart, clearCart };
-});
+//   const clearCart = () => {
+//     cart.value = {};
+//   };
+
+//   return { cart, addToCart, removeFromCart, clearCart };
+// });

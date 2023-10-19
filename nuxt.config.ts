@@ -1,7 +1,14 @@
 import path from "path";
 
 export default defineNuxtConfig({
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxtjs/tailwindcss", "@nuxt/image", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
+    "@nuxtjs/tailwindcss",
+    "@nuxt/image",
+    "@pinia/nuxt",
+    "@formkit/nuxt",
+  ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -25,5 +32,8 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
     typeCheck: true,
+  },
+  formkit: {
+    autoImport: true,
   },
 });

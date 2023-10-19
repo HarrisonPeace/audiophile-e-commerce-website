@@ -1,6 +1,13 @@
+import FormKitVariants from "@formkit/themes/tailwindcss";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./pages/**/*.{js,ts,jsx,tsx,vue}", "./components/**/*.{js,ts,jsx,tsx,vue}"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,vue}",
+    "./components/**/*.{js,ts,jsx,tsx,vue}",
+    "./formkit/**/*.{js,ts,jsx,tsx,vue}",
+    "./formkit-tailwind-theme.js",
+  ],
   theme: {
     extend: {
       transitionTimingFunction: {
@@ -23,4 +30,5 @@ module.exports = {
       manrope: ["Manrope", "sans-serif"],
     },
   },
+  plugins: [FormKitVariants],
 };

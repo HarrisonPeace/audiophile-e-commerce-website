@@ -7,7 +7,7 @@ export function useHelpers() {
   }
 
   const convertPrice = (price: number): string => {
-    if (price < 1000) return price;
+    if (price < 1000) return `${price}`;
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 

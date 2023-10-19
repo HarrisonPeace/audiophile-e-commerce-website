@@ -62,11 +62,21 @@ const suggestedProducts = computed(() => {
         </h1>
         <p class="mb-6 opacity-60 md:mb-8">{{ selectedProduct.description }}</p>
         <p class="text-heading-base mb-8 lg:mb-12">$ {{ convertPrice(selectedProduct.price) }}</p>
+
+        <FormKit
+          type="form"
+          :actions="false"
+          :value="{
+            productQnt: 1,
+          }"
+          @submit="submitHandler"
+        >
+          <div class="flex gap-4 max-sm:flex-wrap">
+            <FormKit type="qntinput" name="productQnt" min="1" max="10" />
+            <Button btn-style="primary" :to="`/products/${category}/${product}`" type="submit"> Add to Cart </Button>
+          </div>
+        </FormKit>
       </div>
-      <form>
-        <QntInput />
-        <Button btn-style="secondary" :to="`/products/${category}/${product}`">Add to Cart</Button>
-      </form>
     </div>
 
     <div
