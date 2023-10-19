@@ -35,10 +35,7 @@ const maxWidth = computed(() => {
             class="mx-auto flex flex-col items-center justify-center py-32 lg:items-start"
             :style="{ maxWidth: `${maxWidth}px` }"
           >
-            <p
-              v-if="productIsNew(selectedProduct.createdAt)"
-              class="text-overline mb-6 uppercase text-light opacity-50"
-            >
+            <p v-if="productIsNew(selectedProduct.createdAt)" class="text-overline mb-6 text-light opacity-50">
               New Product
             </p>
             <h1 ref="headerRef" class="mb-6 flex flex-col text-light">

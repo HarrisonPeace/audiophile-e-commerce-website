@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/core";
-
 const route = useRoute();
 const { products } = storeToRefs(useProductStore());
 const showMobileMenu = ref(false);
