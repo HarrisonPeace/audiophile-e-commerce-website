@@ -1,5 +1,5 @@
 <script setup lang="ts">
-defineEmits(["closeModal"]);
+defineEmits(["closeModal", "mouseOverModal"]);
 defineProps<{
   showModal: boolean;
   position: "center" | "top-right";
@@ -12,11 +12,12 @@ defineProps<{
       <Transition name="modal">
         <div
           v-if="showModal"
-          class="absolute left-1/2 top-0 z-50 m-6 -translate-x-1/2 overflow-y-auto rounded-md bg-light px-7 py-8"
+          class="absolute left-1/2 top-6 z-50 max-w-full -translate-x-1/2 overflow-y-auto rounded-md bg-light px-7 py-8 md:top-9"
           :class="[
-            position === 'center' && 'p-12 md:top-14',
-            position === 'top-right' && 'md:right-9 md:top-0 md:translate-x-0 md:translate-y-0 md:p-8 lg:top-2',
+            position === 'center' && 'p-12 md:top-14 md:max-w-lg lg:top-16',
+            position === 'top-right' && 'sm:left-auto sm:right-0 sm:max-w-sm sm:translate-x-0  md:p-8',
           ]"
+          @mouseover="$emit('mouseOverModal')"
         >
           <slot />
         </div>
@@ -33,26 +34,6 @@ defineProps<{
 </template>
 
 <style lang="scss">
-.modal-button-enter-active,
-.modal-button-leave-active {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-
-.modal-button-leave-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.modal-button-enter-from,
-.modal-button-leave-to {
-  opacity: 0;
-  transform: rotate(180deg);
-  transform-origin: center;
-}
-
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.25s ease;

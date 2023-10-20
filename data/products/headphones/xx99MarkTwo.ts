@@ -17,6 +17,9 @@ const xx99MarkTwo: Product = {
     { qnt: 1, item: "3.5mm 5m Audio Cable" },
     { qnt: 1, item: "Travel Bag" },
   ],
+  category: "headphones",
+  key: "xx99MarkTwo",
+  isHero: false,
 };
 
 export default xx99MarkTwo;

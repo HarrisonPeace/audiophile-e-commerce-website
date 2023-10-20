@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { products } = storeToRefs(useProductStore());
+const productStore = useProductStore();
+const categories = productStore.findCategories();
 const currentYear = new Date().getFullYear();
 </script>
 
@@ -18,11 +19,11 @@ const currentYear = new Date().getFullYear();
           >
             <NuxtLink class="hover-light font-bold uppercase" to="/">Home</NuxtLink>
             <NuxtLink
-              v-for="(value, key) in products"
-              :key="key"
+              v-for="category in categories"
+              :key="category"
               class="hover-light font-bold uppercase"
-              :to="`/product/${key}`"
-              >{{ key }}</NuxtLink
+              :to="`/product/${category}`"
+              >{{ category }}</NuxtLink
             >
           </div>
 

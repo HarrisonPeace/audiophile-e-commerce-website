@@ -5,18 +5,10 @@ export interface Product {
   createdAt: Date;
   features: string[];
   inTheBox: { qnt: number; item: string }[];
+  category: string;
+  key: string;
+  isHero: boolean;
 }
-
-export interface Category {
-  [key: string]: Product;
-}
-
-export interface Categories {
-  earphones: Category;
-  headphones: Category;
-  speakers: Category;
-}
-
 export interface FormKitContext<T> {
   _value: T;
   attrs: Record<string, any>;

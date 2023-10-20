@@ -1,27 +1,28 @@
 <script setup lang="ts">
-const { products } = storeToRefs(useProductStore());
+const productStore = useProductStore();
+
 defineProps<{
   disableCategories?: string[];
+  highlightCategories?: string[];
 }>();
 
-const heroProducts = ref({
-  earphones: "yx1Wireless",
-  headphones: "xx99MarkOne",
-  speakers: "zx9",
-});
+const categories = productStore.findCategories();
+const heroProducts = productStore.findProducts("isHero", true);
 </script>
 
 <template>
   <div class="content-container grid w-full grid-cols-1 gap-x-3 gap-y-8 sm:grid-cols-3 lg:gap-x-8">
     <NuxtLink
-      v-for="(value, key) in products"
-      :key="key"
-      :class="[disableCategories?.includes?.(key) && 'pointer-events-none']"
+      v-for="category in categories"
+      :key="category"
+      :class="[disableCategories?.includes?.(category) && 'pointer-events-none']"
       class="group/nav-item categoryCard relative w-full"
       :to="`/products/${key}`"
     >
       <NuxtImg
-        :src="`/images/products/${key}/${heroProducts[key]}/display.png`"
+        :src="`/images/products/${category}/${
+          heroProducts.filter(product => product.category === category)[0]?.key ?? ''
+        }/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
         height="104"
       />
@@ -39,7 +40,7 @@ const heroProducts = ref({
         </div>
       </div>
       <div
-        v-if="disableCategories?.includes?.(key)"
+        v-if="highlightCategories?.includes?.(category)"
         class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary md:left-0 md:translate-x-0"
       ></div>
     </NuxtLink>

@@ -17,6 +17,9 @@ const yx1Wireless: Product = {
     { qnt: 1, item: "USB-C Charging Cable" },
     { qnt: 1, item: "Travel Pouch" },
   ],
+  category: "earphones",
+  key: "yx1Wireless",
+  isHero: true,
 };
 
 export default yx1Wireless;

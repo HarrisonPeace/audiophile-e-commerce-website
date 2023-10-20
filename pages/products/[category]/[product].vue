@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Product } from "@interfaces";
-import { CategoriesEnum, ProductsEnum } from "@enums";
 
 const cartStore = useCartStore();
 
@@ -8,17 +7,16 @@ const { productIsNew, convertPrice } = useHelpers();
 const { products } = storeToRefs(useProductStore());
 const route = useRoute();
 
-const categoryKey = route.params.category as CategoriesEnum;
-const productKey = route.params.product as ProductsEnum;
+const productKey = route.params.product as keyof typeof products;
 
-if (CategoriesEnum[categoryKey] === undefined || ProductsEnum[productKey] === undefined) {
+const selectedProduct = computed<Product>(() => products.value[productKey]);
+
+if (!selectedProduct.value) {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
 
-const selectedProduct = computed<Product>(() => products.value[categoryKey][productKey]);
 const suggestedProducts = computed(() => {
-  const suggestedProductKeys: { categoryKey: keyof typeof CategoriesEnum; productKey: keyof typeof ProductsEnum }[] =
-    [];
+  const suggestedProductKeys: (keyof typeof products)[] = [];
 
   const returnRandomKey = (o: any): any => {
     const keys = Object.keys(o);
@@ -26,10 +24,9 @@ const suggestedProducts = computed(() => {
   };
 
   while (suggestedProductKeys.length < 3) {
-    const randomCategoryKey = returnRandomKey(products.value) as keyof typeof CategoriesEnum;
-    const randomProductKey = returnRandomKey(products.value[randomCategoryKey]) as keyof typeof ProductsEnum;
-    if (!suggestedProductKeys.some(keys => keys.productKey === randomProductKey) && productKey !== randomProductKey)
-      suggestedProductKeys.push({ categoryKey: randomCategoryKey, productKey: randomProductKey });
+    const randomProductKey = returnRandomKey(products.value) as keyof typeof products;
+    if (!suggestedProductKeys.includes(randomProductKey) && productKey !== randomProductKey)
+      suggestedProductKeys.push(randomProductKey);
   }
 
   return suggestedProductKeys;
@@ -59,7 +56,11 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
       class="content-container mb-20 grid grid-cols-1 gap-x-16 gap-y-10 md:mb-28 md:grid-cols-2 lg:mb-40 lg:gap-x-32"
     >
       <div class="flex h-full w-full items-center justify-center bg-gray-medium px-4 py-14">
-        <NuxtImg :src="`/images/products/${categoryKey}/${productKey}/display.png`" height="500" class="h-52 lg:h-80" />
+        <NuxtImg
+          :src="`/images/products/${selectedProduct.category}/${productKey}/display.png`"
+          height="500"
+          class="h-52 lg:h-80"
+        />
       </div>
       <div>
         <p v-if="productIsNew(selectedProduct.createdAt)" class="text-overline mb-6">New Product</p>
@@ -107,17 +108,17 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
       class="content-container mb-20 grid grid-cols-1 gap-5 md:mb-28 md:grid-cols-2 md:grid-rows-2 lg:mb-40 lg:gap-8"
     >
       <NuxtImg
-        :src="`/images/products/${categoryKey}/${productKey}/product-1.png`"
+        :src="`/images/products/${selectedProduct.category}/${productKey}/product-1.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-1 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${categoryKey}/${productKey}/product-2.png`"
+        :src="`/images/products/${selectedProduct.category}/${productKey}/product-2.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-2 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${categoryKey}/${productKey}/product-3.png`"
+        :src="`/images/products/${selectedProduct.category}/${productKey}/product-3.png`"
         height="600"
         class="h-96 w-full rounded-md object-cover object-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       />
@@ -128,13 +129,7 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
         <h3 class="mb-10 text-center md:mb-14 lg:mb-16">You may also like</h3>
       </div>
       <div class="mb-28 grid grid-cols-1 gap-28 gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-3 lg:mb-40 lg:gap-x-8">
-        <ProductCard
-          v-for="keys in suggestedProducts"
-          :key="keys.productKey"
-          :product-category="CategoriesEnum[keys.categoryKey]"
-          :product="ProductsEnum[keys.productKey]"
-          card-style="displayGrid"
-        />
+        <ProductCard v-for="key in suggestedProducts" :key="key" :product="key" card-style="displayGrid" />
       </div>
     </div>
 

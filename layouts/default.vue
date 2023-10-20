@@ -1,7 +1,11 @@
+<script setup lang="ts">
+const cartStore = useCartStore();
+</script>
+
 <template>
   <div class="flex min-h-screen flex-col bg-white">
     <Header />
-    <div id="modals" class="content-container"></div>
+    <div id="modals" class="content-container w-screen"></div>
     <main class="grow bg-light">
       <NuxtLoadingIndicator color="#D87D4A" />
       <slot />
@@ -24,7 +28,15 @@
       </div>
     </main>
     <Footer class="mt-auto" />
-    <Modal :show-modal="true" position="top-right">ashfjskfhaskfhaskf</Modal>
+    <Modal
+      :show-modal="cartStore.showCartModal"
+      position="top-right"
+      @close-modal="cartStore.closeCartModal"
+      @mouse-over-modal="cartStore.clearCartTimeout"
+    >
+      >
+      <div>sdfsdf</div></Modal
+    >
   </div>
 </template>
 

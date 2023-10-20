@@ -16,6 +16,9 @@ const XX59: Product = {
     { qnt: 1, item: "User Manual" },
     { qnt: 1, item: "3.5mm 5m Audio Cable" },
   ],
+  category: "headphones",
+  key: "XX59",
+  isHero: false,
 };
 
 export default XX59;

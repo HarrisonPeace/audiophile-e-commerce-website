@@ -17,6 +17,9 @@ const ZX9: Product = {
     { qnt: 1, item: "3.5mm 10m Audio Cable" },
     { qnt: 1, item: "10m Optical Cable" },
   ],
+  category: "headphones",
+  key: "ZX9",
+  isHero: true,
 };
 
 export default ZX9;

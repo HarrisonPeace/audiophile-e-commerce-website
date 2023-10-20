@@ -1,4 +1,5 @@
 import { useCookie } from "nuxt/app";
+import { ref } from "vue";
 
 import { defineStore } from "pinia";
 import { ProductsEnum } from "@enums";
@@ -8,9 +9,11 @@ interface Cart {
 }
 
 export const useCartStore = defineStore("CartStore", () => {
-  const cart = useCookie<Cart>("AP_CART");
+  const cart = useCookie<Cart>("AP_CART") as Ref<Cart>;
+  const showCartModal = ref(false);
+  const cartTimeout = ref<ReturnType<typeof setTimeout> | undefined>();
 
-  if (typeof cart !== "object") cart.value = {} as Cart;
+  if (typeof cart.value !== "object") cart.value = {} as Cart;
 
   function addToCart(productKey: keyof typeof ProductsEnum, qnt: number) {
     if (cart.value[productKey]) {
@@ -18,6 +21,7 @@ export const useCartStore = defineStore("CartStore", () => {
     } else {
       cart.value[productKey] = qnt;
     }
+    openCartModal(true);
   }
 
   function removeFromCart(productKey: keyof typeof ProductsEnum, qnt: number) {
@@ -29,9 +33,41 @@ export const useCartStore = defineStore("CartStore", () => {
     }
   }
 
+  function openCartModal(closeOnTimeout = false) {
+    showCartModal.value = true;
+    if (closeOnTimeout) {
+      cartTimeout.value = setTimeout(() => {
+        showCartModal.value = false;
+      }, 1000);
+    }
+  }
+
+  function toggleCartModal() {
+    showCartModal.value = !showCartModal.value;
+  }
+
+  function closeCartModal() {
+    showCartModal.value = false;
+  }
+
   function clearCart() {
     cart.value = {};
   }
 
-  return { cart, addToCart, removeFromCart, clearCart };
+  function clearCartTimeout() {
+    clearTimeout(cartTimeout.value);
+  }
+
+  return {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    toggleCartModal,
+    closeCartModal,
+    showCartModal,
+    openCartModal,
+    cartTimeout,
+    clearCartTimeout,
+  };
 });

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { CategoriesEnum, ProductsEnum } from "@enums";
 const { productIsNew } = useHelpers();
 
-const { products } = storeToRefs(useProductStore());
+const productStore = useProductStore();
 
 const props = defineProps<{
-  productCategory: CategoriesEnum;
-  product: ProductsEnum;
+  productKey: string;
   description: string;
 }>();
 
-const selectedProduct = computed(() => products.value[props.productCategory][props.product]);
+const selectedProduct = computed(() => {
+  return productStore.findProduct(props.productKey);
+});
 
 const headerRef = ref<HTMLElement | null>(null);
 const maxWidth = computed(() => {
@@ -20,11 +20,11 @@ const maxWidth = computed(() => {
 </script>
 
 <template>
-  <div class="relative overflow-hidden bg-gray-dark">
+  <div v-if="selectedProduct" class="relative overflow-hidden bg-gray-dark">
     <div class="lg:content-container lg:grid lg:grid-cols-2">
       <div class="lg:order-2 lg:border-t lg:border-solid lg:border-zinc-700">
         <NuxtImg
-          :src="`/images/products/${productCategory}/${product}/hero.png`"
+          :src="`/images/products/${selectedProduct.category}/${product}/hero.png`"
           class="h-full transform object-cover object-center max-lg:absolute max-lg:left-1/2 max-lg:top-[calc(50%+25px)] max-lg:-translate-x-1/2 max-lg:-translate-y-1/2 lg:h-[600px] lg:object-contain"
           height="600"
         />
@@ -40,10 +40,10 @@ const maxWidth = computed(() => {
             </p>
             <h1 ref="headerRef" class="mb-6 flex flex-col text-light">
               <span>{{ selectedProduct.name }}</span
-              ><span>{{ productCategory }}</span>
+              ><span>{{ selectedProduct.category }}</span>
             </h1>
             <p class="mb-10 text-light opacity-50 max-lg:text-center">{{ description }}</p>
-            <Button btn-style="primary" :to="`/products/${productCategory}/${product}`">See Product</Button>
+            <Button btn-style="primary" :to="`/products/${selectedProduct.category}/${product}`">See Product</Button>
           </div>
         </div>
       </div>

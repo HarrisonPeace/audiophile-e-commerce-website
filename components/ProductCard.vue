@@ -1,19 +1,14 @@
 <script setup lang="ts">
-import { CategoriesEnum, ProductsEnum } from "@enums";
-
-const { products } = storeToRefs(useProductStore());
+import { Product } from "@interfaces";
 
 type cardStyles = "hero" | "default" | "split" | "display" | "displayGrid";
 
 const props = defineProps<{
-  productCategory: CategoriesEnum;
-  product: ProductsEnum;
+  product: Product;
   description?: string;
   cardStyle: cardStyles;
   imgRight?: boolean;
 }>();
-
-const selectedProduct = computed(() => products.value[props.productCategory][props.product]);
 
 const styles: { [key in cardStyles]?: any } = {
   hero: {
@@ -81,7 +76,7 @@ const imgUrl = computed(() => {
       break;
   }
 
-  return `/images/products/${props.productCategory}/${props.product}/${img}.png`;
+  return `/images/products/${props.product.category}/${props.product}/${img}.png`;
 });
 
 const btnStyle = computed(() => {
@@ -120,16 +115,16 @@ const btnStyle = computed(() => {
         :class="[styles[cardStyle].textContainer, description ? 'gap-6' : ' gap-8']"
       >
         <h3 class="mb-0" :class="styles[cardStyle].heading">
-          <span>{{ selectedProduct.name }}</span>
-          {{ productCategory !== "speakers" ? " " : "" }}
-          <span>{{ productCategory !== "speakers" ? productCategory : productCategory.slice(0, -1) }}</span>
+          <span>{{ product.name }}</span>
+          {{ product.category !== "speakers" ? " " : "" }}
+          <span>{{ product.category !== "speakers" ? product.category : product.category.slice(0, -1) }}</span>
         </h3>
         <p v-if="description || cardStyle === 'display'" class="mb-0" :class="styles[cardStyle].description">
-          {{ description ?? selectedProduct.description }}
+          {{ description ?? product.description }}
         </p>
         <Button
           :btn-style="btnStyle"
-          :to="`/products/${productCategory}/${product}`"
+          :to="`/products/${product.category}/${product}`"
           class="w-fit"
           :class="styles[cardStyle].button"
         >

@@ -2,8 +2,11 @@
 import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/core";
 
 const route = useRoute();
-const { products } = storeToRefs(useProductStore());
+const cartStore = useCartStore();
+const productStore = useProductStore();
 const showMobileMenu = ref(false);
+
+const categories = productStore.findCategories();
 
 const toggleMobileMenu = () => {
   document.body.classList.toggle("overflow-y-hidden");
@@ -110,21 +113,24 @@ const headerHeight = computed(() => {
           </NuxtLink>
           <nav ref="navRefs" class="hidden gap-8 lg:flex">
             <NuxtLink
-              v-for="(value, key) in products"
-              :key="key"
+              v-for="category in categories"
+              :key="category"
               class="hover-light border-b-4 border-t-4 border-solid border-gray-dark font-bold uppercase transition-all ease-in-out"
               :class="[
                 reduceHeaderPadding ? 'py-3' : 'py-7',
-                route.path.includes(key) && 'pointer-events-none  border-b-4 border-b-primary',
+                route.path.includes(category) && ' border-b-4 border-b-primary',
+                route.path.replace('/', '') === category && ' border-b-4 border-b-primary',
               ]"
-              :to="`/products/${key}`"
-              >{{ key }}</NuxtLink
+              :to="`/products/${category}`"
+              >{{ category }}</NuxtLink
             >
           </nav>
           <button
             ref="navRefs"
             class="hover-light transition-all ease-in-out"
             :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
+            title="Open Cart"
+            @click="cartStore.toggleCartModal"
           >
             <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -146,7 +152,10 @@ const headerHeight = computed(() => {
           }"
         >
           <nav>
-            <Categories :disable-categories="[route.path.replace('/', '')]" />
+            <Categories
+              :disable-categories="[route.path.replace('/', '') === category]"
+              :highlight-categories="route.path.includes(category)"
+            />
           </nav>
         </div>
       </Transition>
