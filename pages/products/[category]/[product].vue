@@ -1,36 +1,23 @@
 <script setup lang="ts">
-import { Product } from "@interfaces";
-
 const cartStore = useCartStore();
+const productStore = useProductStore();
 
 const { productIsNew, convertPrice } = useHelpers();
-const { products } = storeToRefs(useProductStore());
 const route = useRoute();
 
-const productKey = route.params.product as keyof typeof products;
+const productKey = route.params.product;
 
-const selectedProduct = computed<Product>(() => products.value[productKey]);
-
-if (!selectedProduct.value) {
+if (typeof productKey !== "string") {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
 
-const suggestedProducts = computed(() => {
-  const suggestedProductKeys: (keyof typeof products)[] = [];
+const selectedProduct = computed(() => productStore.findProduct(productKey));
 
-  const returnRandomKey = (o: any): any => {
-    const keys = Object.keys(o);
-    return keys[Math.floor(Math.random() * keys.length)];
-  };
+if (typeof selectedProduct.value === "undefined") {
+  throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
+}
 
-  while (suggestedProductKeys.length < 3) {
-    const randomProductKey = returnRandomKey(products.value) as keyof typeof products;
-    if (!suggestedProductKeys.includes(randomProductKey) && productKey !== randomProductKey)
-      suggestedProductKeys.push(randomProductKey);
-  }
-
-  return suggestedProductKeys;
-});
+const suggestedProducts = computed(() => productStore.getSuggestedProducts(productKey));
 
 const onSubmit = ({ productQnt }: { productQnt: number }) => {
   cartStore.addToCart(productKey, productQnt);
@@ -57,19 +44,21 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
     >
       <div class="flex h-full w-full items-center justify-center bg-gray-medium px-4 py-14">
         <NuxtImg
-          :src="`/images/products/${selectedProduct.category}/${productKey}/display.png`"
+          :src="`/images/products/${selectedProduct?.category}/${productKey}/display.png`"
           height="500"
           class="h-52 lg:h-80"
         />
       </div>
       <div>
-        <p v-if="productIsNew(selectedProduct.createdAt)" class="text-overline mb-6">New Product</p>
+        <p v-if="selectedProduct?.createdAt && productIsNew(selectedProduct.createdAt)" class="text-overline mb-6">
+          New Product
+        </p>
         <h1 ref="headerRef" class="text-heading-2xl mb-6 flex flex-col md:mb-8">
-          <span>{{ selectedProduct.name }}</span>
+          <span>{{ selectedProduct?.name }}</span>
           <span>{{ productCategory }}</span>
         </h1>
-        <p class="mb-6 opacity-60 md:mb-8">{{ selectedProduct.description }}</p>
-        <p class="text-heading-base mb-8 lg:mb-12">$ {{ convertPrice(selectedProduct.price) }}</p>
+        <p class="mb-6 opacity-60 md:mb-8">{{ selectedProduct?.description }}</p>
+        <p class="text-heading-base mb-8 lg:mb-12">$ {{ convertPrice(selectedProduct?.price ?? 0) }}</p>
 
         <FormKit
           type="form"
@@ -92,12 +81,12 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
     >
       <div>
         <h3 class="mb-6 md:mb-8">Features</h3>
-        <p v-for="(p, idx) in selectedProduct.features" :key="idx" class="opacity-60">{{ p }}</p>
+        <p v-for="(p, idx) in selectedProduct?.features" :key="idx" class="opacity-60">{{ p }}</p>
       </div>
       <div class="md:grid md:grid-cols-2 md:gap-x-8 lg:block">
         <h3 class="mb-6 md:mb-8">In the box</h3>
         <div>
-          <p v-for="item in selectedProduct.inTheBox" :key="item.item.replace(' ', '-')" class="flex gap-6">
+          <p v-for="item in selectedProduct?.inTheBox" :key="item.item.replace(' ', '-')" class="flex gap-6">
             <span class="font-bold text-primary">{{ item.qnt }}x</span> <span class="opacity-60">{{ item.item }}</span>
           </p>
         </div>
@@ -108,17 +97,17 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
       class="content-container mb-20 grid grid-cols-1 gap-5 md:mb-28 md:grid-cols-2 md:grid-rows-2 lg:mb-40 lg:gap-8"
     >
       <NuxtImg
-        :src="`/images/products/${selectedProduct.category}/${productKey}/product-1.png`"
+        :src="`/images/products/${selectedProduct?.category}/${productKey}/product-1.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-1 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${selectedProduct.category}/${productKey}/product-2.png`"
+        :src="`/images/products/${selectedProduct?.category}/${productKey}/product-2.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-2 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${selectedProduct.category}/${productKey}/product-3.png`"
+        :src="`/images/products/${selectedProduct?.category}/${productKey}/product-3.png`"
         height="600"
         class="h-96 w-full rounded-md object-cover object-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       />

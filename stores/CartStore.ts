@@ -15,7 +15,7 @@ export const useCartStore = defineStore("CartStore", () => {
 
   if (typeof cart.value !== "object") cart.value = {} as Cart;
 
-  function addToCart(productKey: keyof typeof ProductsEnum, qnt: number) {
+  function addToCart(productKey: string, qnt: number) {
     if (cart.value[productKey]) {
       cart.value[productKey] += qnt;
     } else {

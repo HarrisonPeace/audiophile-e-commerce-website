@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { Product } from "@interfaces";
 const productStore = useProductStore();
 const route = useRoute();
 
-const category = route.params.category as keyof Product;
+const category = route.params.category;
 
-const categoryProducts = productStore.findProductsFromCategory(category);
+const categories = productStore.findCategories();
 
-if (!Object.keys(categoryProducts.value).length) {
+if (typeof category !== "string" || !categories.includes(category)) {
   throw createError({ statusCode: 404, statusMessage: "Page Not Found" });
 }
+
+const categoryProducts = computed(() => productStore.findProductsFromCategory(category));
 </script>
 
 <template>

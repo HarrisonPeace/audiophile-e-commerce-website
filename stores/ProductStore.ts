@@ -12,7 +12,31 @@ export const useProductStore = defineStore("ProductStore", () => {
     return products.value.find(product => product.key === productKey);
   }
 
-  function findProducts(key: keyof Product, searchValue: string | boolean): Product[] {
+  function findProducts(
+    key: keyof Product,
+    searchValue: string | boolean | number | (string | number | Date)[]
+  ): Product[] {
+    if (Array.isArray(searchValue)) {
+      return products.value.filter((product: Product) => {
+        const value = product[key];
+        //   Array filtering for booleans isn't needed
+        if (typeof value === "boolean") {
+          return false;
+        }
+        if (value instanceof Date) {
+          return searchValue.some((search: any) => {
+            if (search instanceof Date) {
+              return search.getTime() === value.getTime();
+            }
+            return false;
+          });
+        }
+        if (typeof value === "string" || typeof value === "number") {
+          return searchValue.includes(value);
+        }
+        return false;
+      });
+    }
     return products.value.filter(product => product[key] === searchValue);
   }
 
@@ -30,5 +54,26 @@ export const useProductStore = defineStore("ProductStore", () => {
     return categories;
   }
 
-  return { products, findProduct, findProducts, findProductsFromCategory, findCategories };
+  function getSuggestedProducts(currentProductKey: string): Product[] {
+    const product = findProduct(currentProductKey);
+
+    if (!product) return [];
+
+    const returnRandomKey = (o: any): any => {
+      const keys = Object.keys(o);
+      return keys[Math.floor(Math.random() * keys.length)];
+    };
+
+    const suggestedProductKeys: string[] = [];
+
+    while (suggestedProductKeys.length < 3) {
+      const randomProductKey = returnRandomKey(products.value);
+      if (!suggestedProductKeys.includes(randomProductKey) && currentProductKey !== randomProductKey)
+        suggestedProductKeys.push(randomProductKey);
+    }
+
+    return findProducts("key", suggestedProductKeys);
+  }
+
+  return { products, findProduct, findProducts, findProductsFromCategory, findCategories, getSuggestedProducts };
 });
