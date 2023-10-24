@@ -20,7 +20,7 @@ const heroProducts = productStore.findProducts("isHero", true);
       :to="`/products/${key}`"
     >
       <NuxtImg
-        :src="`/images/products/${category}/${
+        :src="`/images/products/${
           heroProducts.filter(product => product.category === category)[0]?.key ?? ''
         }/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"

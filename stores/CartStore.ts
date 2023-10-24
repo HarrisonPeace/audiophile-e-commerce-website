@@ -2,7 +2,6 @@ import { useCookie } from "nuxt/app";
 import { ref } from "vue";
 
 import { defineStore } from "pinia";
-import { ProductsEnum } from "@enums";
 
 interface Cart {
   [product: string]: number;
@@ -24,7 +23,7 @@ export const useCartStore = defineStore("CartStore", () => {
     openCartModal(true);
   }
 
-  function removeFromCart(productKey: keyof typeof ProductsEnum, qnt: number) {
+  function removeFromCart(productKey: string, qnt: number) {
     if (cart.value[productKey]) {
       cart.value[productKey] -= qnt;
       if (cart.value[productKey] <= 0) {

@@ -24,7 +24,7 @@ const maxWidth = computed(() => {
     <div class="lg:content-container lg:grid lg:grid-cols-2">
       <div class="lg:order-2 lg:border-t lg:border-solid lg:border-zinc-700">
         <NuxtImg
-          :src="`/images/products/${selectedProduct.category}/${product}/hero.png`"
+          :src="`/images/products/${product}/hero.png`"
           class="h-full transform object-cover object-center max-lg:absolute max-lg:left-1/2 max-lg:top-[calc(50%+25px)] max-lg:-translate-x-1/2 max-lg:-translate-y-1/2 lg:h-[600px] lg:object-contain"
           height="600"
         />
