@@ -12,10 +12,10 @@ defineProps<{
       <Transition name="modal">
         <div
           v-if="showModal"
-          class="absolute left-1/2 top-6 z-50 max-w-full -translate-x-1/2 overflow-y-auto rounded-md bg-light px-7 py-8 md:top-9"
+          class="absolute left-1/2 top-6 z-50 w-full max-w-full -translate-x-1/2 overflow-y-auto rounded-md bg-light md:top-9"
           :class="[
-            position === 'center' && 'p-12 md:top-14 md:max-w-lg lg:top-16',
-            position === 'top-right' && 'sm:left-auto sm:right-0 sm:max-w-sm sm:translate-x-0  md:p-8',
+            position === 'center' && 'md:top-14 md:w-[540px] md:max-w-lg lg:top-16',
+            position === 'top-right' && 'sm:left-auto sm:right-0 sm:w-96 sm:max-w-sm sm:translate-x-0 ',
           ]"
           @mouseover="$emit('mouseOverModal')"
         >

@@ -1,11 +1,17 @@
 <script setup lang="ts">
-const cartStore = useCartStore();
+const { headerHeight, reduceHeaderPadding } = storeToRefs(useGeneralStore());
+// modalContainerTop correlates with headerPadding and they must be updated together
+const modalContainerTop = computed(() => headerHeight.value - (reduceHeaderPadding.value ? 32 : 0));
 </script>
 
 <template>
   <div class="flex min-h-screen flex-col bg-white">
     <Header />
-    <div id="modals" class="content-container w-screen"></div>
+    <div
+      id="modals"
+      class="content-container fixed left-0 z-50 w-screen transition-all"
+      :style="{ top: `${modalContainerTop}px` }"
+    ></div>
     <main class="grow bg-light">
       <NuxtLoadingIndicator color="#D87D4A" />
       <slot />
@@ -28,15 +34,7 @@ const cartStore = useCartStore();
       </div>
     </main>
     <Footer class="mt-auto" />
-    <Modal
-      :show-modal="cartStore.showCartModal"
-      position="top-right"
-      @close-modal="cartStore.closeCartModal"
-      @mouse-over-modal="cartStore.clearCartTimeout"
-    >
-      >
-      <div>sdfsdf</div></Modal
-    >
+    <Cart />
   </div>
 </template>
 

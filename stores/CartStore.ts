@@ -12,9 +12,13 @@ export const useCartStore = defineStore("CartStore", () => {
   const showCartModal = ref(false);
   const cartTimeout = ref<ReturnType<typeof setTimeout> | undefined>();
 
+  const productStore = useProductStore();
+
   if (typeof cart.value !== "object") cart.value = {} as Cart;
 
   function addToCart(productKey: string, qnt: number) {
+    if (!productStore.findProduct(productKey)) return;
+
     if (cart.value[productKey]) {
       cart.value[productKey] += qnt;
     } else {
@@ -37,7 +41,7 @@ export const useCartStore = defineStore("CartStore", () => {
     if (closeOnTimeout) {
       cartTimeout.value = setTimeout(() => {
         showCartModal.value = false;
-      }, 1000);
+      }, 2000);
     }
   }
 
@@ -57,6 +61,17 @@ export const useCartStore = defineStore("CartStore", () => {
     clearTimeout(cartTimeout.value);
   }
 
+  function replaceCart(newCart: Cart) {
+    const checkedProducts: Cart = {};
+    for (const productKey in newCart) {
+      if (productStore.productExists(productKey)) {
+        checkedProducts[productKey] = newCart[productKey];
+      }
+
+      cart.value = checkedProducts;
+    }
+  }
+
   return {
     cart,
     addToCart,
@@ -68,5 +83,6 @@ export const useCartStore = defineStore("CartStore", () => {
     openCartModal,
     cartTimeout,
     clearCartTimeout,
+    replaceCart,
   };
 });

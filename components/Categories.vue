@@ -17,7 +17,7 @@ const heroProducts = productStore.findProducts("isHero", true);
       :key="category"
       :class="[disableCategories?.includes?.(category) && 'pointer-events-none']"
       class="group/nav-item categoryCard relative w-full"
-      :to="`/products/${key}`"
+      :to="`/products/${category}`"
     >
       <NuxtImg
         :src="`/images/products/${

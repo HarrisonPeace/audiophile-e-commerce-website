@@ -21,7 +21,7 @@ const categoryProducts = computed(() => productStore.findProductsFromCategory(ca
       <ProductCard
         v-for="(product, idx) in categoryProducts"
         :key="product.key"
-        :products="categoryProducts"
+        :product="product"
         card-style="display"
         :img-right="+idx % 2 !== 0"
       />

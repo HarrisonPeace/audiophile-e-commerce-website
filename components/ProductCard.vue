@@ -76,7 +76,7 @@ const imgUrl = computed(() => {
       break;
   }
 
-  return `/images/products/${props.product.category}/${props.product}/${img}.png`;
+  return `/images/products/${props.product.key}/${img}.png`;
 });
 
 const btnStyle = computed(() => {
@@ -124,7 +124,7 @@ const btnStyle = computed(() => {
         </p>
         <Button
           :btn-style="btnStyle"
-          :to="`/products/${product.category}/${product}`"
+          :to="`/products/${product.category}/${product.key}`"
           class="w-fit"
           :class="styles[cardStyle].button"
         >

@@ -42,7 +42,7 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
     <div
       class="content-container mb-20 grid grid-cols-1 gap-x-16 gap-y-10 md:mb-28 md:grid-cols-2 lg:mb-40 lg:gap-x-32"
     >
-      <div class="flex h-full w-full items-center justify-center bg-gray-medium px-4 py-14">
+      <div class="flex h-full w-full items-center justify-center rounded-lg bg-gray-medium px-4 py-14">
         <NuxtImg :src="`/images/products/${productKey}/display.png`" height="500" class="h-52 lg:h-80" />
       </div>
       <div>

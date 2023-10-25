@@ -4,6 +4,7 @@ import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/co
 const route = useRoute();
 const cartStore = useCartStore();
 const productStore = useProductStore();
+const { headerHeight, reduceHeaderPadding } = storeToRefs(useGeneralStore());
 const showMobileMenu = ref(false);
 
 const categories = productStore.findCategories();
@@ -22,7 +23,6 @@ const breakpoints = useBreakpoints(breakpointsTailwind);
 const isLargeScreenOrSmaller = breakpoints.smallerOrEqual("lg");
 watch([() => isLargeScreenOrSmaller.value, () => route.path], closeMobileMenu);
 
-const reduceHeaderPadding = ref(false);
 const lastScrollTop = ref(0);
 const navRefs = ref<HTMLElement[]>([]);
 const headerRef = ref<HTMLElement | null>(null);
@@ -54,10 +54,15 @@ watch(
   }
 );
 
-const headerHeight = computed(() => {
-  if (!headerRef.value) return 0;
-  return headerRef.value.offsetHeight;
-});
+watch(
+  () => headerRef.value,
+  () => {
+    headerHeight.value = headerRef?.value?.offsetHeight ?? 0;
+  }
+);
+
+// headerPadding correlates with modalContainerTop and they must be updated together
+const headerPadding = computed(() => (reduceHeaderPadding.value ? "py-4" : "py-8"));
 </script>
 
 <template>
@@ -68,7 +73,7 @@ const headerHeight = computed(() => {
           <button
             ref="navRefs"
             class="hover-light transition-all ease-in-out lg:hidden"
-            :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
+            :class="headerPadding"
             :title="showMobileMenu ? 'Close Menu' : 'Open Menu'"
             @click="toggleMobileMenu"
           >
@@ -102,13 +107,7 @@ const headerHeight = computed(() => {
             </div>
           </button>
 
-          <NuxtLink
-            ref="navRefs"
-            to="/"
-            class="transition-all ease-in-out"
-            :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
-            title="Home"
-          >
+          <NuxtLink ref="navRefs" to="/" class="transition-all ease-in-out" :class="headerPadding" title="Home">
             <NuxtImg src="/logo.svg" width="143" height="25" />
           </NuxtLink>
           <nav ref="navRefs" class="hidden gap-8 lg:flex">
@@ -128,7 +127,7 @@ const headerHeight = computed(() => {
           <button
             ref="navRefs"
             class="hover-light transition-all ease-in-out"
-            :class="reduceHeaderPadding ? 'py-4' : 'py-8'"
+            :class="headerPadding"
             title="Open Cart"
             @click="cartStore.toggleCartModal"
           >
@@ -148,7 +147,9 @@ const headerHeight = computed(() => {
           v-if="showMobileMenu"
           class="absolute left-0 top-full w-full overflow-y-auto rounded-b-md bg-light pb-16 pt-14"
           :style="{
-            maxHeight: headerHeight ? `calc(100vh - ${headerHeight + (reduceHeaderPadding ? 16 : 0)}px)` : '100vh',
+            maxHeight: generalStore.headerHeight
+              ? `calc(100vh - ${generalStore.headerHeight + (reduceHeaderPadding ? 16 : 0)}px)`
+              : '100vh',
           }"
         >
           <nav>

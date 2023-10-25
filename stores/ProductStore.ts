@@ -75,5 +75,17 @@ export const useProductStore = defineStore("ProductStore", () => {
     return findProducts("key", suggestedProductKeys);
   }
 
-  return { products, findProduct, findProducts, findProductsFromCategory, findCategories, getSuggestedProducts };
+  const productExists = (productKey: string): boolean => {
+    return products.value.some(product => product.key === productKey);
+  };
+
+  return {
+    products,
+    findProduct,
+    findProducts,
+    findProductsFromCategory,
+    findCategories,
+    getSuggestedProducts,
+    productExists,
+  };
 });
