@@ -17,7 +17,7 @@ const XX59: Product = {
     { qnt: 1, item: "3.5mm 5m Audio Cable" },
   ],
   category: "headphones",
-  key: "XX59",
+  key: "xx59",
   isHero: false,
 };
 

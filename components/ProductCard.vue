@@ -94,7 +94,7 @@ const btnStyle = computed(() => {
 </script>
 
 <template>
-  <div class="group/card-product content-container flex w-full overflow-hidden">
+  <div v-if="product" class="group/card-product content-container flex w-full overflow-hidden">
     <div class="grow rounded-lg" :class="styles[cardStyle].container">
       <div class="rounded-lg" :class="styles[cardStyle].imgContainer">
         <NuxtImg :src="imgUrl" height="500" :class="styles[cardStyle].img" />
