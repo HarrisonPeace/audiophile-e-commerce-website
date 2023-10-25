@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const { headerHeight, reduceHeaderPadding } = storeToRefs(useGeneralStore());
+const { headerHeight, reduceHeaderPadding, headerPaddingReductionAmount } = storeToRefs(useGeneralStore());
 // modalContainerTop correlates with headerPadding and they must be updated together
-const modalContainerTop = computed(() => headerHeight.value - (reduceHeaderPadding.value ? 32 : 0));
+const modalContainerTop = computed(
+  () => headerHeight.value - (reduceHeaderPadding.value ? headerPaddingReductionAmount.value : 0)
+);
 </script>
 
 <template>
@@ -37,17 +39,3 @@ const modalContainerTop = computed(() => headerHeight.value - (reduceHeaderPaddi
     <Cart />
   </div>
 </template>
-
-<style lang="scss">
-// TODO: update transition
-/*** Default Page Transition ***/
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(2rem);
-}
-</style>
