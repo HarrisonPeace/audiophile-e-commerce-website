@@ -11,7 +11,7 @@ defineProps<{
 }>();
 
 const isEditing = ref(false);
-const { convertPrice } = useHelpers();
+const { convertPrice, getTotalCost } = useHelpers();
 
 const showConfirmRemoveAll = ref(false);
 
@@ -31,12 +31,6 @@ const onSubmit = (newCart: { string: number }) => {
 const products = computed(() => {
   return Object.keys(cartStore.cart).map(key => productStore.findProduct(key));
 });
-
-const getTotalCost = (values: { [productKey: string]: number }) => {
-  return products.value.reduce((acc, curr) => {
-    return acc + (curr?.price ?? 0) * (values[curr?.key ?? ""] ?? 0);
-  }, 0);
-};
 
 // Prevents hydration issues
 const awaitMount = ref(false);
@@ -97,7 +91,7 @@ onMounted(() => {
             <div v-if="showAdditionalInfo" class="flex flex-col gap-1">
               <div class="flex justify-between">
                 <p class="mb-0 uppercase opacity-60">Shipping</p>
-                <p class="mb-0 font-bold">$ 50</p>
+                <p class="mb-0 font-bold">$ {{ cartStore.shippingCost }}</p>
               </div>
               <div class="flex justify-between">
                 <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
@@ -105,7 +99,9 @@ onMounted(() => {
               </div>
               <div class="mt-4 flex justify-between">
                 <p class="mb-0 uppercase opacity-60">Grand Total</p>
-                <p class="mb-0 font-bold text-primary">$ {{ convertPrice(getTotalCost(value) + 50) }}</p>
+                <p class="mb-0 font-bold text-primary">
+                  $ {{ convertPrice(getTotalCost(value) + cartStore.shippingCost) }}
+                </p>
               </div>
             </div>
           </div>

@@ -3,6 +3,23 @@ definePageMeta({
   layout: "plain",
 });
 
+const router = useRouter();
+const { convertPrice, getTotalCost } = useHelpers();
+
+const cartStore = useCartStore();
+const productStore = useProductStore();
+
+const showSuccessModal = ref(false);
+
+const onCloseSuccessModal = () => {
+  router.push("/");
+  showSuccessModal.value = false;
+};
+
+const products = computed(() => {
+  return Object.keys(cartStore.cart).map(key => productStore.findProduct(key));
+});
+
 const onSubmit = () => {};
 
 // Prevents hydration issues
@@ -123,5 +140,36 @@ onMounted(() => {
         </div>
       </Transition>
     </FormKit>
+
+    <Modal :show-modal="showSuccessModal" position="center" @close-modal="onCloseSuccessModal">
+      <div>
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="32" fill="#D87D4A" />
+        </svg>
+        <p class="text-heading-2xl">Thank you for your order</p>
+        <p class="opacity-60">You will receive an email confirmation shortly.</p>
+        <div>
+          <div class="rounded-l-lg bg-gray-medium p-6">
+            <div v-for="product in products" :key="product?.key" class="flex gap-4">
+              <div class="h-16 w-16">
+                <NuxtImg class="w-full" width="40" :src="`/images/products/${product?.key}/display.png`" />
+              </div>
+              <div class="flex flex-col">
+                <p class="mb-0 font-bold">{{ product?.name }}</p>
+                <p class="mb-0 opacity-60">$ {{ convertPrice(product?.price ?? 0) }}</p>
+              </div>
+              <div class="ml-auto">
+                <div class="opacity-60">x{{ cartStore.cart[product?.key ?? ""] }}</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p>Grand Total</p>
+            <p>$ {{ convertPrice(getTotalCost(CartStore.cart) + cartStore.shippingCost) }}</p>
+          </div>
+        </div>
+        <Button btn-style="primary" class="w-full" @click="onCloseSuccessModal">Back to home</Button>
+      </div>
+    </Modal>
   </div>
 </template>
