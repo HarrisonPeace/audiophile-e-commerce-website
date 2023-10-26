@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { reset } from "@formkit/core";
-
 const cartStore = useCartStore();
 const productStore = useProductStore();
 
@@ -39,6 +37,12 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
     return acc + (curr?.price ?? 0) * (values[curr?.key ?? ""] ?? 0);
   }, 0);
 };
+
+// Prevents hydration issues
+const awaitMount = ref(false);
+onMounted(() => {
+  awaitMount.value = true;
+});
 </script>
 
 <template>
@@ -59,6 +63,7 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
     </div>
 
     <FormKit
+      v-if="awaitMount"
       id="productSummary"
       v-slot="{ value }"
       type="form"
@@ -66,57 +71,59 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
       :value="cartStore.cart"
       @submit="onSubmit"
     >
-      <div class="flex flex-col gap-8">
-        <div v-for="product in products" :key="product?.key" class="flex gap-4">
-          <div class="h-16 w-16 rounded-lg bg-gray-medium p-3">
-            <NuxtImg class="w-full" width="40" :src="`/images/products/${product?.key}/display.png`" />
-          </div>
-          <div class="flex flex-col">
-            <p class="mb-0 font-bold">{{ product?.name }}</p>
-            <p class="mb-0 opacity-60">$ {{ convertPrice(product?.price ?? 0) }}</p>
-          </div>
-          <div class="ml-auto">
-            <div v-if="isEditing">
-              <FormKit type="qntinput" :name="product?.key" min="1" max="10" preserve />
+      <Transition name="fade-move">
+        <div v-if="awaitMount" class="flex flex-col gap-8">
+          <div v-for="product in products" :key="product?.key" class="flex gap-4">
+            <div class="h-16 w-16 rounded-lg bg-gray-medium p-3">
+              <NuxtImg class="w-full" width="40" :src="`/images/products/${product?.key}/display.png`" />
             </div>
-            <div v-if="!isEditing" class="opacity-60">x{{ cartStore.cart[product?.key ?? ""] }}</div>
+            <div class="flex flex-col">
+              <p class="mb-0 font-bold">{{ product?.name }}</p>
+              <p class="mb-0 opacity-60">$ {{ convertPrice(product?.price ?? 0) }}</p>
+            </div>
+            <div class="ml-auto">
+              <div v-if="isEditing">
+                <FormKit type="qntinput" :name="product?.key" min="1" max="10" preserve />
+              </div>
+              <div v-if="!isEditing" class="opacity-60">x{{ cartStore.cart[product?.key ?? ""] }}</div>
+            </div>
           </div>
-        </div>
 
-        <div class="flex flex-col gap-1">
-          <div class="flex justify-between">
-            <p class="mb-0 uppercase opacity-60">Total</p>
-            <p class="mb-0 font-bold">$ {{ convertPrice(getTotalCost(value)) }}</p>
-          </div>
-          <div v-if="showAdditionalInfo" class="flex flex-col gap-1">
+          <div class="flex flex-col gap-1">
             <div class="flex justify-between">
-              <p class="mb-0 uppercase opacity-60">Shipping</p>
-              <p class="mb-0 font-bold">$ 50</p>
+              <p class="mb-0 uppercase opacity-60">Total</p>
+              <p class="mb-0 font-bold">$ {{ convertPrice(getTotalCost(value)) }}</p>
             </div>
-            <div class="flex justify-between">
-              <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
-              <p class="mb-0 font-bold">$ {{ convertPrice(Math.ceil(getTotalCost(value) * 0.2)) }}</p>
-            </div>
-            <div class="mt-4 flex justify-between">
-              <p class="mb-0 uppercase opacity-60">Grand Total</p>
-              <p class="mb-0 font-bold text-primary">$ {{ convertPrice(getTotalCost(value) + 50) }}</p>
+            <div v-if="showAdditionalInfo" class="flex flex-col gap-1">
+              <div class="flex justify-between">
+                <p class="mb-0 uppercase opacity-60">Shipping</p>
+                <p class="mb-0 font-bold">$ 50</p>
+              </div>
+              <div class="flex justify-between">
+                <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
+                <p class="mb-0 font-bold">$ {{ convertPrice(Math.ceil(getTotalCost(value) * 0.2)) }}</p>
+              </div>
+              <div class="mt-4 flex justify-between">
+                <p class="mb-0 uppercase opacity-60">Grand Total</p>
+                <p class="mb-0 font-bold text-primary">$ {{ convertPrice(getTotalCost(value) + 50) }}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <Button
-          class="w-full"
-          btn-style="primary"
-          type="button"
-          @click="
-            () => {
-              isEditing ? submitForm('productSummary') : emit('click');
-            }
-          "
-        >
-          {{ isEditing ? "Save Changes" : buttonText }}
-        </Button>
-      </div>
+          <Button
+            class="w-full"
+            btn-style="primary"
+            type="button"
+            @click="
+              () => {
+                isEditing ? submitForm('productSummary') : emit('click');
+              }
+            "
+          >
+            {{ isEditing ? "Save Changes" : buttonText }}
+          </Button>
+        </div>
+      </Transition>
     </FormKit>
 
     <div

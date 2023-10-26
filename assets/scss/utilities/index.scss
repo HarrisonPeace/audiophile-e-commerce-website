@@ -13,24 +13,6 @@
   opacity: 0;
 }
 
-/*** Default Fade Transition ***/
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-leave-active {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
 /*** Hover Styles ***/
 .hover-dark,
 .hover-light {
@@ -45,16 +27,4 @@
 
 .hover-light {
   @apply text-light;
-}
-
-// TODO: update transition
-/*** Default Page Transition ***/
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(2rem);
 }

@@ -22,6 +22,12 @@ const suggestedProducts = computed(() => productStore.getSuggestedProducts(produ
 const onSubmit = ({ productQnt }: { productQnt: number }) => {
   cartStore.addToCart(productKey, productQnt);
 };
+
+// Prevents hydration issues
+const awaitMount = ref(false);
+onMounted(() => {
+  awaitMount.value = true;
+});
 </script>
 
 <template>
@@ -51,12 +57,13 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
         </p>
         <h1 ref="headerRef" class="text-heading-2xl mb-6 flex flex-col md:mb-8">
           <span>{{ selectedProduct?.name }}</span>
-          <span>{{ productCategory }}</span>
+          <span>{{ selectedProduct?.category }}</span>
         </h1>
         <p class="mb-6 opacity-60 md:mb-8">{{ selectedProduct?.description }}</p>
         <p class="text-heading-base mb-8 lg:mb-12">$ {{ convertPrice(selectedProduct?.price ?? 0) }}</p>
 
         <FormKit
+          v-if="awaitMount"
           type="form"
           :actions="false"
           :value="{
@@ -64,10 +71,12 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
           }"
           @submit="onSubmit"
         >
-          <div class="flex gap-4 max-sm:flex-wrap">
-            <FormKit type="qntinput" name="productQnt" min="1" max="10" />
-            <Button btn-style="primary" type="submit"> Add to Cart </Button>
-          </div>
+          <Transition name="fade-move">
+            <div v-if="awaitMount" class="flex gap-4 max-sm:flex-wrap">
+              <FormKit type="qntinput" name="productQnt" min="1" max="10" />
+              <Button btn-style="primary" type="submit"> Add to Cart </Button>
+            </div>
+          </Transition>
         </FormKit>
       </div>
     </div>

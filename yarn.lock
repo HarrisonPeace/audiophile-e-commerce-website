@@ -835,6 +835,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@formkit/addons@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@formkit/addons@npm:1.2.2"
+  dependencies:
+    "@formkit/auto-animate": latest
+    "@formkit/core": 1.2.2
+    "@formkit/inputs": 1.2.2
+    "@formkit/utils": 1.2.2
+  checksum: 61c3adec7918905aec382e3381a87c26e2af5249bf8fa3a69fcc293aaedd1fc5b4912204b4c93236e0bce8901d284a7e33f917b4f1629cc6603def5fa0761e78
+  languageName: node
+  linkType: hard
+
+"@formkit/auto-animate@npm:latest":
+  version: 0.8.0
+  resolution: "@formkit/auto-animate@npm:0.8.0"
+  checksum: fbe4c35e022c0d26435343368a2cac3e63d5579815925632a828797a204ad20ad17738860396a4a08f89c0b0a88c1f0f7f483e9d03c9fc4f1cf05c6c1fa0bf4f
+  languageName: node
+  linkType: hard
+
 "@formkit/core@npm:1.2.2":
   version: 1.2.2
   resolution: "@formkit/core@npm:1.2.2"
@@ -4441,6 +4460,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "designo-multi-page-website@workspace:."
   dependencies:
+    "@formkit/addons": ^1.2.2
     "@formkit/icons": ^1.2.2
     "@formkit/nuxt": ^1.2.2
     "@formkit/themes": ^1.2.2

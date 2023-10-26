@@ -12,3 +12,56 @@
 @layer utilities {
   @import "./utilities/index.scss";
 }
+
+// TODO: update transition
+/*** Default Page Transition ***/
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s ease;
+  overflow: hidden;
+  & > *:not(:first-child) {
+    transition: transform 0.25s ease;
+  }
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  & > *:not(:first-child) {
+    transform: translateY(1rem);
+  }
+}
+
+/*** Default Fade Transition ***/
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-leave-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-move-enter-active,
+.fade-move-leave-active {
+  transition: opacity 0.25s ease;
+  overflow: hidden;
+  & > * {
+    transition: transform 0.25s ease;
+  }
+}
+
+.fade-move-enter-from,
+.fade-move-leave-to {
+  opacity: 0;
+  & > * {
+    transform: translateY(1rem);
+  }
+}
