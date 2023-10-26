@@ -27,12 +27,12 @@ const onSubmit = ({ productQnt }: { productQnt: number }) => {
 <template>
   <div>
     <div class="content-container mb-6 mt-8 md:mb-14 md:mt-20">
-      <button class="flex gap-3" @click="$router.back()">
+      <button class="group/back-button flex gap-3" @click="$router.back()">
         <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg" class="rotate-180">
           <path d="M1.32227 1L6.32227 6L1.32227 11" stroke="#D87D4A" stroke-width="2" />
         </svg>
         <span
-          class="text-button text-dark opacity-60 transition-all group-hover/nav-item:text-primary group-hover/nav-item:opacity-100"
+          class="text-button text-dark opacity-60 transition-all group-hover/back-button:text-primary group-hover/back-button:opacity-100"
         >
           Back
         </span>

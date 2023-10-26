@@ -20,14 +20,12 @@ const heroProducts = productStore.findProducts("isHero", true);
       :to="`/products/${category}`"
     >
       <NuxtImg
-        :src="`/images/products/${
-          heroProducts.filter(product => product.category === category)[0]?.key ?? ''
-        }/display.png`"
+        :src="`/images/products/${heroProducts.find(product => product.category === category)?.key ?? ''}/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
         height="104"
       />
       <div class="flex flex-col items-center justify-center rounded-lg bg-gray-medium pb-6 pt-20">
-        <span class="mb-4 font-bold uppercase">{{ key }}</span>
+        <span class="mb-4 font-bold uppercase">{{ category }}</span>
         <div class="flex gap-3">
           <span
             class="text-button text-dark opacity-60 transition-all group-hover/nav-item:text-primary group-hover/nav-item:opacity-100"
@@ -41,7 +39,7 @@ const heroProducts = productStore.findProducts("isHero", true);
       </div>
       <div
         v-if="highlightCategories?.includes?.(category)"
-        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary md:left-0 md:translate-x-0"
+        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary lg:left-0 lg:translate-x-0"
       ></div>
     </NuxtLink>
   </div>

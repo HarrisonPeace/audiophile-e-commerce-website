@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { reset } from "@formkit/core";
+
 const cartStore = useCartStore();
 const productStore = useProductStore();
 
-const emit = defineEmits(["onClick"]);
+const emit = defineEmits(["click"]);
 
 defineProps<{
   title: string;
@@ -40,10 +42,11 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
 </script>
 
 <template>
-  <div class="relative px-6 py-8 md:px-8">
+  <div class="relative p-6 md:p-8 2xl:p-12">
     <div class="mb-8 flex items-center justify-between">
       <h6 class="mb-0">{{ title }}</h6>
       <button
+        type="button"
         class="opacity-60 transition-all hover:text-primary hover:opacity-100"
         @click="
           () => {
@@ -55,7 +58,14 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
       </button>
     </div>
 
-    <FormKit v-slot="{ value }" type="form" :actions="false" :value="cartStore.cart" @submit="onSubmit">
+    <FormKit
+      id="productSummary"
+      v-slot="{ value }"
+      type="form"
+      :actions="false"
+      :value="cartStore.cart"
+      @submit="onSubmit"
+    >
       <div class="flex flex-col gap-8">
         <div v-for="product in products" :key="product?.key" class="flex gap-4">
           <div class="h-16 w-16 rounded-lg bg-gray-medium p-3">
@@ -78,18 +88,18 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
             <p class="mb-0 uppercase opacity-60">Total</p>
             <p class="mb-0 font-bold">$ {{ convertPrice(getTotalCost(value)) }}</p>
           </div>
-          <div v-if="showAdditionalInfo">
+          <div v-if="showAdditionalInfo" class="flex flex-col gap-1">
             <div class="flex justify-between">
               <p class="mb-0 uppercase opacity-60">Shipping</p>
               <p class="mb-0 font-bold">$ 50</p>
             </div>
             <div class="flex justify-between">
-              <p class="mb-0 uppercase opacity-60">Grand Total</p>
-              <p class="mb-0 font-bold">$ {{ convertPrice(getTotalCost(value) + 50) }}</p>
+              <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
+              <p class="mb-0 font-bold">$ {{ convertPrice(Math.ceil(getTotalCost(value) * 0.2)) }}</p>
             </div>
             <div class="mt-4 flex justify-between">
-              <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
-              <p class="mb-0 font-bold text-primary">$ {{ convertPrice(Math.ceil(getTotalCost(value) * 0.2)) }}</p>
+              <p class="mb-0 uppercase opacity-60">Grand Total</p>
+              <p class="mb-0 font-bold text-primary">$ {{ convertPrice(getTotalCost(value) + 50) }}</p>
             </div>
           </div>
         </div>
@@ -97,8 +107,12 @@ const getTotalCost = (values: { [productKey: string]: number }) => {
         <Button
           class="w-full"
           btn-style="primary"
-          :type="isEditing ? 'submit' : 'button'"
-          @click="() => (isEditing ? null : emit('onClick'))"
+          type="button"
+          @click="
+            () => {
+              isEditing ? submitForm('productSummary') : emit('click');
+            }
+          "
         >
           {{ isEditing ? "Save Changes" : buttonText }}
         </Button>

@@ -18,7 +18,7 @@ const ZX9: Product = {
     { qnt: 1, item: "10m Optical Cable" },
   ],
   category: "speakers",
-  key: "9",
+  key: "zx9",
   isHero: true,
 };
 

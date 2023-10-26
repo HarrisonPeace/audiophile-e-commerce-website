@@ -22,7 +22,7 @@ const currentYear = new Date().getFullYear();
               v-for="category in categories"
               :key="category"
               class="hover-light font-bold uppercase"
-              :to="`/product/${category}`"
+              :to="`/products/${category}`"
               >{{ category }}</NuxtLink
             >
           </div>

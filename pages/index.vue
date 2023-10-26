@@ -5,8 +5,6 @@ const zx9 = productStore.findProduct("zx9");
 const zx7 = productStore.findProduct("zx7");
 const yx1Wireless = productStore.findProduct("yx1Wireless");
 const xx99MarkTwo = productStore.findProduct("xx99MarkTwo");
-
-console.log({ zx9, zx7, yx1Wireless, xx99MarkTwo });
 </script>
 
 <template>

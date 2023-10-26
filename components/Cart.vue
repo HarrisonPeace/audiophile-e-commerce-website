@@ -16,9 +16,11 @@ const cartIsEmpty = computed(() => Object.keys(cartStore.cart).length === 0);
     @close-modal="cartStore.closeCartModal"
     @mouse-over-modal="cartStore.clearCartTimeout"
   >
-    <div v-if="cartIsEmpty" class="p-6 md:p-8">
-      <h6 class="mb-0">Your cart is empty</h6>
+    <div>
+      <div v-if="cartIsEmpty" class="p-6 md:p-8">
+        <h6 class="mb-0">Your cart is empty</h6>
+      </div>
+      <ProductSummary v-else title="Cart" button-text="Checkout" @click="onClick" />
     </div>
-    <ProductSummary v-else title="Cart" show-additional-info button-text="Checkout" @on-click="onClick" />
   </Modal>
 </template>
