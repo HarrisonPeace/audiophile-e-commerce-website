@@ -33,9 +33,7 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-  formkit: {
-    autoImport: true,
-  },
+
   devtools: {
     enabled: true,
     timeline: {

@@ -1,9 +1,5 @@
 <script setup lang="ts">
-const { headerHeight, reduceHeaderPadding, headerPaddingReductionAmount } = storeToRefs(useGeneralStore());
-// modalContainerTop correlates with headerPadding and they must be updated together
-const modalContainerTop = computed(
-  () => headerHeight.value - (reduceHeaderPadding.value ? headerPaddingReductionAmount.value : 0)
-);
+const { dynamicHeaderHeight } = storeToRefs(useGeneralStore());
 </script>
 
 <template>
@@ -12,8 +8,8 @@ const modalContainerTop = computed(
     <div
       id="modals"
       class="content-container fixed left-0 z-50 w-screen transition-all"
-      :style="{ top: `${modalContainerTop}px` }"
-    ></div>
+      :style="{ top: `${dynamicHeaderHeight}px` }"
+    />
     <main class="grow bg-light">
       <NuxtLoadingIndicator color="#D87D4A" />
       <slot />

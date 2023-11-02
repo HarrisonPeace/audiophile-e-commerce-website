@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { submitForm } from "@formkit/vue";
+
 const cartStore = useCartStore();
 const productStore = useProductStore();
 
@@ -40,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative p-6 md:p-8 2xl:p-12">
+  <div class="relative p-6 md:p-8 2xl:p-12" v-bind="$attrs">
     <div class="mb-8 flex items-center justify-between">
       <h6 class="mb-0">{{ title }}</h6>
       <button
@@ -86,7 +88,9 @@ onMounted(() => {
           <div class="flex flex-col gap-1">
             <div class="flex justify-between">
               <p class="mb-0 uppercase opacity-60">Total</p>
-              <p class="mb-0 font-bold">$ {{ convertPrice(getTotalCost(value)) }}</p>
+              <p v-if="value && typeof value === 'number'" class="mb-0 font-bold">
+                $ {{ convertPrice(getTotalCost(value, productStore.products)) }}
+              </p>
             </div>
             <div v-if="showAdditionalInfo" class="flex flex-col gap-1">
               <div class="flex justify-between">
@@ -95,12 +99,14 @@ onMounted(() => {
               </div>
               <div class="flex justify-between">
                 <p class="mb-0 uppercase opacity-60">Vat (Included)</p>
-                <p class="mb-0 font-bold">$ {{ convertPrice(Math.ceil(getTotalCost(value) * 0.2)) }}</p>
+                <p v-if="value && typeof value === 'number'" class="mb-0 font-bold">
+                  $ {{ convertPrice(Math.ceil(getTotalCost(value, productStore.products) * 0.2)) }}
+                </p>
               </div>
               <div class="mt-4 flex justify-between">
                 <p class="mb-0 uppercase opacity-60">Grand Total</p>
-                <p class="mb-0 font-bold text-primary">
-                  $ {{ convertPrice(getTotalCost(value) + cartStore.shippingCost) }}
+                <p v-if="value && typeof value === 'number'" class="mb-0 font-bold text-primary">
+                  $ {{ convertPrice(getTotalCost(value, productStore.products) + cartStore.shippingCost) }}
                 </p>
               </div>
             </div>

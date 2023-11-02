@@ -72,7 +72,7 @@ onMounted(() => {
           @submit="onSubmit"
         >
           <Transition name="fade-move">
-            <div v-if="awaitMount" class="flex gap-4 max-sm:flex-wrap">
+            <div v-show="awaitMount" class="flex gap-4 max-sm:flex-wrap">
               <FormKit type="qntinput" name="productQnt" min="1" max="10" />
               <Button btn-style="primary" type="submit"> Add to Cart </Button>
             </div>
@@ -123,7 +123,12 @@ onMounted(() => {
         <h3 class="mb-10 text-center md:mb-14 lg:mb-16">You may also like</h3>
       </div>
       <div class="mb-28 grid grid-cols-1 gap-28 gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-3 lg:mb-40 lg:gap-x-8">
-        <ProductCard v-for="key in suggestedProducts" :key="key" :product="key" card-style="displayGrid" />
+        <ProductCard
+          v-for="product in suggestedProducts"
+          :key="product.key"
+          :product="product"
+          card-style="displayGrid"
+        />
       </div>
     </div>
 

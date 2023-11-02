@@ -40,7 +40,7 @@ const heroProducts = productStore.findProducts("isHero", true);
       <div
         v-if="highlightCategories?.includes?.(category)"
         class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary lg:left-0 lg:translate-x-0"
-      ></div>
+      />
     </NuxtLink>
   </div>
 </template>

@@ -19,7 +19,7 @@ export default {
   "family:text": {
     inner:
       "flex items-center ring-1 ring-gray-300 focus-within:ring-primary [&>label:first-child]:focus-within:text-primary rounded-lg mb-1 ",
-    input: "w-full px-6 py-4 border-none text-base text-gray-700 placeholder-gray-400",
+    input: "w-full px-6 py-4 border-none text-base text-gray-700 placeholder-gray-400 bg-white rounded-lg",
     label: "text-gray-700 text-xs focus-within:text-primary ",
   },
 

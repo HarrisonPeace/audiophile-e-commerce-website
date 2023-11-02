@@ -61,7 +61,7 @@ watch(
   }
 );
 
-// headerPadding correlates with modalContainerTop and they must be updated together
+// headerPadding correlates with headerPaddingReductionAmount and they must be updated together
 const headerPadding = computed(() => (reduceHeaderPadding.value ? "py-4" : "py-8"));
 
 const modifiedPath = computed(() => route.path.replace("products", "").replaceAll("/", ""));
@@ -157,7 +157,7 @@ const modifiedPath = computed(() => route.path.replace("products", "").replaceAl
           <nav>
             <Categories
               :disable-categories="[modifiedPath]"
-              :highlight-categories="[categories.find(category => modifiedPath.includes(category))]"
+              :highlight-categories="[categories.find(category => modifiedPath.includes(category)) ?? '']"
             />
           </nav>
         </div>
@@ -169,7 +169,7 @@ const modifiedPath = computed(() => route.path.replace("products", "").replaceAl
       v-if="showMobileMenu"
       class="fixed left-0 top-0 z-10 h-screen w-screen bg-dark opacity-40"
       @click="toggleMobileMenu"
-    ></div>
+    />
   </Transition>
 </template>
 

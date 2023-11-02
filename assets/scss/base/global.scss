@@ -128,3 +128,9 @@ p {
 body {
   @apply font-manrope;
 }
+
+/*** Smooth Scroll ***/
+body,
+html {
+  scroll-behavior: smooth;
+}

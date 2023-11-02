@@ -3,6 +3,7 @@ const router = useRouter();
 const cartStore = useCartStore();
 
 const onClick = () => {
+  cartStore.closeCartModal();
   router.push("/checkout");
 };
 
@@ -17,7 +18,7 @@ const cartIsEmpty = computed(() => Object.keys(cartStore.cart).length === 0);
     @mouse-over-modal="cartStore.clearCartTimeout"
   >
     <div>
-      <div v-if="cartIsEmpty" class="p-6 md:p-8">
+      <div v-if="cartIsEmpty" class="flex justify-center p-6 md:p-8">
         <h6 class="mb-0">Your cart is empty</h6>
       </div>
       <ProductSummary v-else title="Cart" button-text="Checkout" @click="onClick" />

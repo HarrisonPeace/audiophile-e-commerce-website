@@ -1,4 +1,4 @@
-const { products } = storeToRefs(useProductStore());
+import { Product } from "@interfaces";
 
 export function useHelpers() {
   function productIsNew(date: Date): boolean {
@@ -13,8 +13,8 @@ export function useHelpers() {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const getTotalCost = (values: { [productKey: string]: number }) => {
-    return products.value.reduce((acc, curr) => {
+  const getTotalCost = (values: { [productKey: string]: number }, products: Product[]) => {
+    return products.reduce((acc, curr) => {
       return acc + (curr?.price ?? 0) * (values[curr?.key ?? ""] ?? 0);
     }, 0);
   };
