@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import { breakpointsTailwind, useBreakpoints, useWindowScroll } from "@vueuse/core";
+
+const { dynamicHeaderHeight } = storeToRefs(useGeneralStore());
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const isSmallScreenOrSmaller = breakpoints.smallerOrEqual("sm");
+const isMediumScreenOrSmaller = breakpoints.smallerOrEqual("md");
+
 defineEmits(["closeModal", "mouseOverModal"]);
 const props = defineProps<{
   showModal: boolean;
@@ -20,6 +27,16 @@ watch(
     }, 250);
   }
 );
+
+const maxHeight = computed(() => {
+  let paddingHeight = 60;
+  if (isSmallScreenOrSmaller.value) {
+    paddingHeight = 20;
+  } else if (isMediumScreenOrSmaller.value || props.position === "top-right") {
+    paddingHeight = 30;
+  }
+  return `calc(100vh - ${dynamicHeaderHeight.value + paddingHeight * 2}px)`;
+});
 </script>
 
 <template>
@@ -29,6 +46,7 @@ watch(
         <Transition name="modal">
           <div
             v-if="showModal"
+            :style="{ maxHeight }"
             v-click-outside="() => modelIsActive && $emit('closeModal')"
             class="absolute left-1/2 top-6 z-50 w-full max-w-full -translate-x-1/2 overflow-y-auto rounded-md bg-light md:top-9"
             :class="[

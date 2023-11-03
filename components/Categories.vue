@@ -1,13 +1,12 @@
 <script setup lang="ts">
 const productStore = useProductStore();
-
-defineProps<{
-  disableCategories?: string[];
-  highlightCategories?: string[];
-}>();
+const route = useRoute();
 
 const categories = productStore.findCategories();
 const heroProducts = productStore.findProducts("isHero", true);
+
+const modifiedPath = computed(() => route.path.replace("products", "").replaceAll("/", ""));
+const highlightCategories = ref(categories.find(category => modifiedPath.value.includes(category)) ?? "");
 </script>
 
 <template>
@@ -15,7 +14,7 @@ const heroProducts = productStore.findProducts("isHero", true);
     <NuxtLink
       v-for="category in categories"
       :key="category"
-      :class="[disableCategories?.includes?.(category) && 'pointer-events-none']"
+      :class="[modifiedPath === category && 'pointer-events-none']"
       class="group/nav-item categoryCard relative w-full"
       :to="`/products/${category}`"
     >
@@ -39,7 +38,7 @@ const heroProducts = productStore.findProducts("isHero", true);
       </div>
       <div
         v-if="highlightCategories?.includes?.(category)"
-        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary lg:left-0 lg:translate-x-0"
+        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary"
       />
     </NuxtLink>
   </div>

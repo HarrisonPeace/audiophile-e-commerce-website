@@ -155,10 +155,7 @@ const modifiedPath = computed(() => route.path.replace("products", "").replaceAl
           }"
         >
           <nav>
-            <Categories
-              :disable-categories="[modifiedPath]"
-              :highlight-categories="[categories.find(category => modifiedPath.includes(category)) ?? '']"
-            />
+            <Categories />
           </nav>
         </div>
       </Transition>

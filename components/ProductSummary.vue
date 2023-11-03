@@ -68,10 +68,14 @@ onMounted(() => {
       @submit="onSubmit"
     >
       <Transition name="fade-move">
-        <div v-if="awaitMount" class="flex flex-col gap-8">
+        <div v-if="awaitMount" class="flex flex-col gap-6">
           <div v-for="product in products" :key="product?.key" class="flex gap-4">
-            <div class="h-16 w-16 rounded-lg bg-gray-medium p-3">
-              <NuxtImg class="w-full" width="40" :src="`/images/products/${product?.key}/display.png`" />
+            <div class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-medium p-3">
+              <NuxtImg
+                class="max-h-full w-full object-contain"
+                height="100"
+                :src="`/images/products/${product?.key}/display.png`"
+              />
             </div>
             <div class="flex flex-col">
               <p class="mb-0 font-bold">{{ product?.name }}</p>

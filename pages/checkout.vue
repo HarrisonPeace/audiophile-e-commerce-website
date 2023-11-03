@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { submitForm } from "@formkit/vue";
+import { submitForm, FormKitMessages } from "@formkit/vue";
 
 definePageMeta({
   layout: "plain",
@@ -33,6 +33,8 @@ const awaitMount = ref(false);
 onMounted(() => {
   awaitMount.value = true;
 });
+
+const showOtherItems = ref(false);
 </script>
 
 <template>
@@ -137,14 +139,17 @@ onMounted(() => {
               </div>
             </div>
             <div class="rounded-lg bg-light">
-              <ProductSummary
-                title="Summary"
-                show-additional-info
-                button-text="Continue & Pay"
-                class="sticky"
-                :style="{ top: `${dynamicHeaderHeight}px` }"
-                @click="() => submitForm('checkout')"
-              />
+              <div>
+                <ProductSummary
+                  title="Summary"
+                  show-additional-info
+                  button-text="Continue & Pay"
+                  class="sticky"
+                  :style="{ top: `${dynamicHeaderHeight}px` }"
+                  @click="() => submitForm('checkout')"
+                />
+              </div>
+              <FormKitMessages class="!-mt-7 !px-6 !pb-5 md:!px-8 md:!pb-7 2xl:!px-12 2xl:!pb-10" />
             </div>
           </div>
         </Transition>
@@ -168,10 +173,21 @@ onMounted(() => {
         <p class="text-heading-2xl">Thank you for your order</p>
         <p class="opacity-60">You will receive an email confirmation shortly.</p>
         <div class="mb-6 grid grid-cols-1 md:mb-8 md:grid-cols-2">
-          <div class="flex flex-col gap-4 rounded-t-lg bg-gray-medium p-6 md:rounded-l-lg md:rounded-tr-none">
-            <div v-for="product in products" :key="product?.key" class="flex gap-4">
-              <div class="h-16 w-16">
-                <NuxtImg class="w-full" width="40" :src="`/images/products/${product?.key}/display.png`" />
+          <div
+            class="flex max-h-56 flex-col gap-4 overflow-y-scroll rounded-t-lg bg-gray-medium p-6 md:rounded-l-lg md:rounded-tr-none"
+          >
+            <div
+              v-for="(product, idx) in products"
+              :key="product?.key"
+              class="flex gap-4"
+              v-show="idx === 0 || showOtherItems"
+            >
+              <div class="flex h-16 w-14 items-center justify-center">
+                <NuxtImg
+                  class="max-h-full w-full object-contain object-left"
+                  height="100"
+                  :src="`/images/products/${product?.key}/display.png`"
+                />
               </div>
               <div class="flex flex-col">
                 <p class="mb-0 font-bold">{{ product?.name }}</p>
@@ -181,6 +197,13 @@ onMounted(() => {
                 <div class="opacity-60">x{{ cartStore.cart[product?.key ?? ""] }}</div>
               </div>
             </div>
+            <button
+              v-if="!showOtherItems"
+              @click.stop="() => (showOtherItems = true)"
+              class="mb-0 mt-2 cursor-pointer text-center text-sm font-bold opacity-60 hover:opacity-100"
+            >
+              And {{ products.length - 1 }} other item(s)
+            </button>
           </div>
           <div class="flex flex-col justify-center rounded-b-lg bg-gray-dark p-6 md:rounded-r-lg md:rounded-bl-none">
             <p class="text-light opacity-50">Grand Total</p>
