@@ -59,20 +59,22 @@ export const useProductStore = defineStore("ProductStore", () => {
 
     if (!product) return [];
 
-    const returnRandomKey = (o: any): any => {
-      const keys = Object.keys(o);
-      return keys[Math.floor(Math.random() * keys.length)];
+    const returnRandomProduct = (): any => {
+      return products.value[Math.floor(Math.random() * products.value.length)];
     };
 
-    const suggestedProductKeys: string[] = [];
+    const suggestedProducts: Product[] = [];
 
-    while (suggestedProductKeys.length < 3) {
-      const randomProductKey = returnRandomKey(products.value);
-      if (!suggestedProductKeys.includes(randomProductKey) && currentProductKey !== randomProductKey)
-        suggestedProductKeys.push(randomProductKey);
+    while (suggestedProducts.length < 3) {
+      const randomProduct = returnRandomProduct();
+      if (
+        currentProductKey !== randomProduct.key &&
+        suggestedProducts.every(product => product.key !== randomProduct.key)
+      )
+        suggestedProducts.push(randomProduct);
     }
 
-    return findProducts("key", suggestedProductKeys);
+    return suggestedProducts;
   }
 
   const productExists = (productKey: string): boolean => {

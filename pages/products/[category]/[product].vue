@@ -123,12 +123,14 @@ onMounted(() => {
         <h3 class="mb-10 text-center md:mb-14 lg:mb-16">You may also like</h3>
       </div>
       <div class="mb-28 grid grid-cols-1 gap-28 gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-3 lg:mb-40 lg:gap-x-8">
-        <ProductCard
-          v-for="product in suggestedProducts"
-          :key="product.key"
-          :product="product"
-          card-style="displayGrid"
-        />
+        <ClientOnly>
+          <ProductCard
+            v-for="product in suggestedProducts"
+            :key="product.key"
+            :product="product"
+            card-style="displayGrid"
+          />
+        </ClientOnly>
       </div>
     </div>
 
