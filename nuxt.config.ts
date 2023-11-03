@@ -33,11 +33,11 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: true,
   },
-
   devtools: {
     enabled: true,
     timeline: {
       enabled: true,
     },
   },
+  plugins: ["./plugins/clickOutside.js"],
 });

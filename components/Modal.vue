@@ -1,6 +1,6 @@
 <script setup lang="ts">
 defineEmits(["closeModal", "mouseOverModal"]);
-defineProps<{
+const props = defineProps<{
   showModal: boolean;
   position: "center" | "top-right";
 }>();
@@ -10,6 +10,16 @@ const awaitMount = ref(false);
 onMounted(() => {
   awaitMount.value = true;
 });
+
+const modelIsActive = ref(false);
+watch(
+  () => props.showModal,
+  () => {
+    setTimeout(() => {
+      modelIsActive.value = props.showModal;
+    }, 250);
+  }
+);
 </script>
 
 <template>
@@ -19,6 +29,7 @@ onMounted(() => {
         <Transition name="modal">
           <div
             v-if="showModal"
+            v-click-outside="() => modelIsActive && $emit('closeModal')"
             class="absolute left-1/2 top-6 z-50 w-full max-w-full -translate-x-1/2 overflow-y-auto rounded-md bg-light md:top-9"
             :class="[
               position === 'center' && 'md:top-14 md:w-[540px] md:max-w-xl lg:top-16',
