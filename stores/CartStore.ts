@@ -12,6 +12,8 @@ export const useCartStore = defineStore("CartStore", () => {
   const shippingCost = ref(50);
   const showCartModal = ref(false);
   const cartTimeout = ref<ReturnType<typeof setTimeout> | undefined>();
+  const cartIsEmpty = computed(() => Object.keys(cart.value).length === 0);
+  const itemsInCart = computed(() => Object.values(cart.value).reduce((acc, curr) => acc + curr, 0));
 
   const productStore = useProductStore();
 
@@ -86,5 +88,7 @@ export const useCartStore = defineStore("CartStore", () => {
     clearCartTimeout,
     replaceCart,
     shippingCost,
+    cartIsEmpty,
+    itemsInCart,
   };
 });
