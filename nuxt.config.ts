@@ -34,5 +34,9 @@ export default defineNuxtConfig({
   },
   image: {
     dir: "assets/images",
+    provider: "netlify",
+    netlify: {
+      baseURl: process.env.IMAGES_URL,
+    },
   },
 });
