@@ -20,7 +20,7 @@ const highlightCategories = ref(categories.find(category => modifiedPath.value.i
     >
       <NuxtImg
         :src="`/products/${heroProducts.find(product => product.category === category)?.key ?? ''}/display.png`"
-        class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
+        class="drop relative mx-auto -mb-14 h-[104px] drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
         height="104"
       />
       <div class="flex flex-col items-center justify-center rounded-lg bg-gray-medium pb-6 pt-20">
