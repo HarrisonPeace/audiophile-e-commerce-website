@@ -32,4 +32,10 @@ export default defineNuxtConfig({
   formkit: {
     configFile: "./formkit/formkit.config.ts",
   },
+  image: {
+    provider: "netlify",
+    netlify: {
+      baseURl: process.env.IMAGES_URL,
+    },
+  },
 });
