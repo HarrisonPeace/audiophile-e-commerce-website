@@ -76,7 +76,7 @@ const imgUrl = computed(() => {
       break;
   }
 
-  return `/images/products/${props.product.key}/${img}.png`;
+  return `/products/${props.product.key}/${img}.png`;
 });
 
 const btnStyle = computed(() => {

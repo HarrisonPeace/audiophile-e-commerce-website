@@ -19,7 +19,7 @@ const highlightCategories = ref(categories.find(category => modifiedPath.value.i
       :to="`/products/${category}`"
     >
       <NuxtImg
-        :src="`/images/products/${heroProducts.find(product => product.category === category)?.key ?? ''}/display.png`"
+        :src="`/products/${heroProducts.find(product => product.category === category)?.key ?? ''}/display.png`"
         class="drop relative mx-auto -mb-14 drop-shadow-product transition-transform duration-300 ease-in-out group-hover/nav-item:-translate-y-1"
         height="104"
       />

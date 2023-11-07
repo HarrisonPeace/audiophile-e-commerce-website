@@ -74,7 +74,7 @@ onMounted(() => {
               <NuxtImg
                 class="max-h-full w-full object-contain"
                 height="100"
-                :src="`/images/products/${product?.key}/display.png`"
+                :src="`/products/${product?.key}/display.png`"
               />
             </div>
             <div class="flex flex-col">

@@ -16,7 +16,7 @@ const { dynamicHeaderHeight } = storeToRefs(useGeneralStore());
 
       <div class="content-container mb-24 grid grid-cols-1 items-center gap-x-8 gap-y-12 md:mb-48 lg:grid-cols-2">
         <NuxtImg
-          src="/images/audio.png"
+          src="/audio.png"
           class="h-[300px] w-full rounded-lg object-cover lg:order-2 lg:h-[588px]"
           height="600"
         />

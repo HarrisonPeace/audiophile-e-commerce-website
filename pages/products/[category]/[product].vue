@@ -49,7 +49,7 @@ onMounted(() => {
       class="content-container mb-20 grid grid-cols-1 gap-x-16 gap-y-10 md:mb-28 md:grid-cols-2 lg:mb-40 lg:gap-x-32"
     >
       <div class="flex h-full w-full items-center justify-center rounded-lg bg-gray-medium px-4 py-14">
-        <NuxtImg :src="`/images/products/${productKey}/display.png`" height="500" class="h-52 lg:h-80" />
+        <NuxtImg :src="`/products/${productKey}/display.png`" height="500" class="h-52 lg:h-80" />
       </div>
       <div>
         <p v-if="selectedProduct?.createdAt && productIsNew(selectedProduct.createdAt)" class="text-overline mb-6">
@@ -102,17 +102,17 @@ onMounted(() => {
       class="content-container mb-20 grid grid-cols-1 gap-5 md:mb-28 md:grid-cols-2 md:grid-rows-2 lg:mb-40 lg:gap-8"
     >
       <NuxtImg
-        :src="`/images/products/${productKey}/product-1.png`"
+        :src="`/products/${productKey}/product-1.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-1 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${productKey}/product-2.png`"
+        :src="`/products/${productKey}/product-2.png`"
         height="300"
         class="h-44 min-h-full w-full rounded-md object-cover object-center md:col-span-1 md:col-start-1 md:row-span-1 md:row-start-2 lg:h-72"
       />
       <NuxtImg
-        :src="`/images/products/${productKey}/product-3.png`"
+        :src="`/products/${productKey}/product-3.png`"
         height="600"
         class="h-96 w-full rounded-md object-cover object-center md:col-span-1 md:col-start-2 md:row-span-2 md:row-start-1 md:h-full"
       />
