@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Product } from "@interfaces";
+import type { Product } from "@interfaces";
 
 type cardStyles = "hero" | "default" | "split" | "display" | "displayGrid";
 

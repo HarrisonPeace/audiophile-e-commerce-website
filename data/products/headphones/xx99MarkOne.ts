@@ -1,4 +1,4 @@
-import { Product } from "@interfaces";
+import type { Product } from "@interfaces";
 
 const xx99MarkOne: Product = {
   name: "XX99 Mark I",

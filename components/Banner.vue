@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Product } from "@interfaces";
+import type { Product } from "@interfaces";
 
 const { productIsNew } = useHelpers();
 

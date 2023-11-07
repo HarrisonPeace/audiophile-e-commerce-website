@@ -8,7 +8,7 @@ interface Cart {
 }
 
 export const useCartStore = defineStore("CartStore", () => {
-  const cart = useCookie<Cart>("AP_CART") as Ref<Cart>;
+  const cart = useCookie<Cart>("AP_CART");
   const shippingCost = ref(50);
   const showCartModal = ref(false);
   const cartTimeout = ref<ReturnType<typeof setTimeout> | undefined>();

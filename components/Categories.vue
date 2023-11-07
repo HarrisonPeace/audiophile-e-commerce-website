@@ -38,7 +38,7 @@ const highlightCategories = ref(categories.find(category => modifiedPath.value.i
       </div>
       <div
         v-if="highlightCategories?.includes?.(category)"
-        class="absolute bottom-0 left-1/2 h-1 w-24 -translate-x-1/2 bg-primary"
+        class="absolute bottom-0 left-1/2 h-[3px] w-24 -translate-x-1/2 bg-primary"
       />
     </NuxtLink>
   </div>

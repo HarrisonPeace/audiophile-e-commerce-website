@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FormKitContext } from "@interfaces";
+import { type FormKitContext } from "@interfaces";
 
 const props = defineProps<{
   context: FormKitContext<number>;

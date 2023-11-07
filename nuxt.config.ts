@@ -1,14 +1,7 @@
 import path from "path";
 
 export default defineNuxtConfig({
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@vueuse/nuxt",
-    "@nuxtjs/tailwindcss",
-    "@nuxt/image",
-    "@pinia/nuxt",
-    "@formkit/nuxt",
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@nuxt/image", "@pinia/nuxt", "@formkit/nuxt"],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -29,15 +22,14 @@ export default defineNuxtConfig({
     "@data": path.resolve(__dirname, "data"),
     "@enums": path.resolve(__dirname, "enums"),
   },
-  typescript: {
-    strict: true,
-    typeCheck: true,
-  },
   devtools: {
     enabled: true,
     timeline: {
       enabled: true,
     },
   },
-  plugins: ["./plugins/clickOutside.js"],
+  plugins: ["./plugins/clickOutside.ts"],
+  formkit: {
+    configFile: "./formkit/formkit.config.ts",
+  },
 });

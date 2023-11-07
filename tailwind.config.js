@@ -6,7 +6,6 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx,vue}",
     "./components/**/*.{js,ts,jsx,tsx,vue}",
     "./formkit/**/*.{js,ts,jsx,tsx,vue}",
-    "./formkit-tailwind-theme.js",
   ],
   theme: {
     extend: {

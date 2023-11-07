@@ -1,4 +1,4 @@
-import { Product } from "@interfaces";
+import type { Product } from "@interfaces";
 
 export function useHelpers() {
   function productIsNew(date: Date): boolean {

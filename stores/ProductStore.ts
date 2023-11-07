@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { Product } from "@interfaces";
+import type { Product } from "@interfaces";
 
 import data from "@data";
 

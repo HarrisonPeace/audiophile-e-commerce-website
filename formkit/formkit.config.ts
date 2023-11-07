@@ -4,7 +4,7 @@ import { generateClasses } from "@formkit/themes";
 import { genesisIcons } from "@formkit/icons";
 import tailwindTheme from "./formkit-tailwind-theme.js"; // change to your theme's path
 
-import QntInput from "./formkit/QntInput.vue";
+import QntInput from "./QntInput.vue";
 
 function scrollToErrors(node: any) {
   if (node.props.type === "form") {
